@@ -1,0 +1,50 @@
+# Compiled source #
+###################
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+*.pyc
+fuzzer-code/*.json
+fuzzer-code/*.taint
+pin-*
+fuzzer-code/data
+fuzzer-code/outd
+fuzzer-code/inter
+fuzzer-code/special
+fuzzer-code/keep
+#fuzzer-code/idafiles
+libdft64/tools/*.out
+libdft64/tools/output.file
+libdft64/tools/*.log
+libdft64/tools/junk.*
+#imageOffset.txt
+
+# Packages #
+############
+# it's better to unpack these files and commit the raw source
+# git has its own built in compression methods
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+
+# Logs and databases #
+######################
+*.log
+*.sql
+*.sqlite
+*.out
+
+
+# Swap files and backup files #
+###############################
+*.swp
+*~
+*.swo

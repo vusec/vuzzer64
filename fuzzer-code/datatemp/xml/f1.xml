@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<letter>
+  <title maxlength="10"> Quote Letter </title>
+  <salutation limit="40">Dear Daniel,</salutation>
+  <text>Thank you <emphasis>SDL Trados Studio 2009</emphasis>. 
+  We especially like the <component translate="yes">XML Parser rules</component> options in the 
+  <component translate="no">XML</component> filter.
+  </text>
+  <title maxlength="40"> Quote Details </title>
+  <text> We would like to order 50 licenses. </text>  <greetings minlength="10">Yours sincerely,</greetings>
+  <signature> Paul Smith</signature>
+  <address translate="yes">Smith &amp; Company Ltd.</address>
+  <address translate="no">Smithtown</address>
+  <weblink>http://www.smith-company-ltd.com</weblink>
+  <logo alt="Logo of Smith and Company Ltd." address="http://www.smith-company-ltd.com/logo.jpg"/>
+</letter>

@@ -1,0 +1,582 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+ACCESS_MASK	tagmap.h	48;"	d
+ALIGN_OFF_MAX	tagmap.h	109;"	d
+ARG_STACK_SIZE	libdft_api.h	58;"	d
+ARRAY_ELEMENT_MASK	tagmap.h	51;"	d
+ARRAY_MAP_T	libdft_api.h	/^typedef std::map<ADDRINT, std::set<ADDRINT>* > ARRAY_MAP_T;$/;"	t
+ARRAY_SET_T	libdft_api.h	/^typedef std::set<ADDRINT> ARRAY_SET_T;$/;"	t
+ASSERT_FAST	tagmap.h	110;"	d
+ArrayLock	libdft_api.cpp	/^PIN_MUTEX ArrayLock;$/;"	v
+BIT2BYTE	libdft_core.h	50;"	d
+BYTE_MASK	tagmap.h	86;"	d
+CHECK	libdft_api.h	175;"	d
+CLR_MASK	tagmap.h	114;"	d
+CPUID_FEATURE_INFO_ECX_MASK	libdft_api.h	55;"	d
+CPUID_FEATURE_INFO_EDX_MASK	libdft_api.h	54;"	d
+DEBUG	libdft_core.h	62;"	d
+DEBUG_IP	libdft_core.cpp	/^ADDRINT DEBUG_IP;$/;"	v
+DEBUG_LIB	libdft_core.cpp	/^static BOOL DEBUG_LIB = FALSE;$/;"	v	file:
+DFT_REG_HELPER1	libdft_api.h	86;"	d
+DFT_REG_HELPER2	libdft_api.h	87;"	d
+DFT_REG_HELPER3	libdft_api.h	88;"	d
+DFT_REG_R10	libdft_api.h	80;"	d
+DFT_REG_R11	libdft_api.h	81;"	d
+DFT_REG_R12	libdft_api.h	82;"	d
+DFT_REG_R13	libdft_api.h	83;"	d
+DFT_REG_R14	libdft_api.h	84;"	d
+DFT_REG_R15	libdft_api.h	85;"	d
+DFT_REG_R8	libdft_api.h	78;"	d
+DFT_REG_R9	libdft_api.h	79;"	d
+DFT_REG_RAX	libdft_api.h	77;"	d
+DFT_REG_RBP	libdft_api.h	72;"	d
+DFT_REG_RBX	libdft_api.h	74;"	d
+DFT_REG_RCX	libdft_api.h	76;"	d
+DFT_REG_RDI	libdft_api.h	70;"	d
+DFT_REG_RDX	libdft_api.h	75;"	d
+DFT_REG_RSI	libdft_api.h	71;"	d
+DFT_REG_RSP	libdft_api.h	73;"	d
+EXEC_ENTRY	libdft_api.cpp	/^ADDRINT EXEC_ENTRY = 0;$/;"	v
+FLAG_TYPE	tagmap.h	37;"	d
+FUNC_CTX_TYPE	libdft_api.h	122;"	d
+FUNC_ENTRY_MASK	tagmap.h	40;"	d
+FUNC_EXIT_MASK	tagmap.h	41;"	d
+GCD_MAX	libdft_utils.cpp	9;"	d	file:
+GRP_NUM	libdft_api.h	89;"	d
+HLIST_HEAD	list.h	389;"	d
+HLIST_HEAD_INIT	list.h	388;"	d
+HeapLock	heap_desc.cpp	/^PIN_MUTEX HeapLock;$/;"	v
+INIT_HLIST_HEAD	list.h	390;"	d
+INIT_HLIST_NODE	list.h	391;"	d
+INIT_LIST_HEAD	list.h	76;"	d
+IPC_FIX	syscall_desc.h	188;"	d
+IsLoop	libdft_core.cpp	/^static BOOL IsLoop(ADDRINT ip, rt_ctx_t* pSite)$/;"	f	file:
+LIBCALL_LIBC	libcall_desc.h	9;"	d
+LIBCALL_LIBC_CALLOC	libcall_desc.h	13;"	d
+LIBCALL_LIBC_FREE	libcall_desc.h	11;"	d
+LIBCALL_LIBC_MALLOC	libcall_desc.h	10;"	d
+LIBCALL_LIBC_REALLOC	libcall_desc.h	12;"	d
+LIBCALL_MAX	libcall_desc.h	15;"	d
+LIST_HEAD	list.h	73;"	d
+LIST_HEAD_INIT	list.h	71;"	d
+LIST_POISON1	list.h	53;"	d
+LIST_POISON2	list.h	54;"	d
+LONG_MASK	tagmap.h	88;"	d
+LOOP_BODY_MASK	tagmap.h	43;"	d
+LOOP_CTX_TYPE	libdft_api.h	121;"	d
+LOOP_ENTRY_MASK	tagmap.h	42;"	d
+LOOP_EXIT_MASK	tagmap.h	44;"	d
+MAX_32BIT_VALUE	libdft_core.h	51;"	d
+MAX_64BIT_VALUE	libdft_core.h	52;"	d
+MAX_ARG_PAGES	libdft_api.h	57;"	d
+MAX_NUM	libdft_api.h	93;"	d
+MAX_NUM_32BIT	libdft_api.h	91;"	d
+MAX_NUM_64BIT	libdft_api.h	92;"	d
+MEM_64BIT_LEN	libdft_core.h	46;"	d
+MEM_BYTE_LEN	libdft_core.h	49;"	d
+MEM_LONG_LEN	libdft_core.h	47;"	d
+MEM_WORD_LEN	libdft_core.h	48;"	d
+MSGCTL	syscall_desc.h	185;"	d
+MSGRCV	syscall_desc.h	184;"	d
+MergeLock	libdft_api.cpp	/^PIN_MUTEX MergeLock;$/;"	v
+NOCHECK	libdft_api.h	174;"	d
+OBJS	Makefile	/^OBJS		= libdft_api.o libdft_core.o syscall_desc.o tagmap.o libdft_utils.o heap_desc.o libcall_desc.o$/;"	m
+OFFSET_MASK	tagmap.h	94;"	d
+OP_0	libdft_core.h	36;"	d
+OP_1	libdft_core.h	37;"	d
+OP_2	libdft_core.h	38;"	d
+OP_3	libdft_core.h	39;"	d
+OVERFLOW_BITS	tagmap.h	117;"	d
+OVERFLOW_MASK	tagmap.h	118;"	d
+PAGETABLE_BITS	tagmap.h	84;"	d
+PAGETABLE_OFFSET_MASK	tagmap.h	95;"	d
+PAGETABLE_SZ	tagmap.h	83;"	d
+PAGE_BITS	tagmap.h	79;"	d
+PAGE_SIZE	tagmap.h	78;"	d
+PAGE_SZ	syscall_desc.h	247;"	d
+POINTER_MASK	tagmap.h	47;"	d
+QUAD_MASK	tagmap.h	89;"	d
+Q_GETFMT	syscall_desc.h	111;"	d
+Q_GETINFO	syscall_desc.h	112;"	d
+Q_GETQUOTA	syscall_desc.h	113;"	d
+Q_SETQUOTA	syscall_desc.h	114;"	d
+Q_XGETQSTAT	syscall_desc.h	117;"	d
+Q_XGETQUOTA	syscall_desc.h	116;"	d
+R32_ALIGN	libdft_core.h	40;"	d
+READ_MASK	tagmap.h	49;"	d
+REG_INDX	libdft_core.cpp	/^size_t REG_INDX(REG reg)$/;"	f
+SEMCTL	syscall_desc.h	183;"	d
+SET_MASK	tagmap.h	113;"	d
+SHMCTL	syscall_desc.h	186;"	d
+STDERR	syscall_desc.h	69;"	d
+STDIN	syscall_desc.h	61;"	d
+STDOUT	syscall_desc.h	65;"	d
+SYSCALL_ARG0	libdft_api.h	62;"	d
+SYSCALL_ARG1	libdft_api.h	63;"	d
+SYSCALL_ARG2	libdft_api.h	64;"	d
+SYSCALL_ARG3	libdft_api.h	65;"	d
+SYSCALL_ARG4	libdft_api.h	66;"	d
+SYSCALL_ARG5	libdft_api.h	67;"	d
+SYSCALL_ARG_NUM	libdft_api.h	61;"	d
+SYSCALL_MAX	libdft_api.h	60;"	d
+SYS_ACCEPT	syscall_desc.h	235;"	d
+SYS_ACCEPT4	syscall_desc.h	243;"	d
+SYS_GETPEERNAME	syscall_desc.h	237;"	d
+SYS_GETSOCKNAME	syscall_desc.h	236;"	d
+SYS_GETSOCKOPT	syscall_desc.h	241;"	d
+SYS_RECV	syscall_desc.h	239;"	d
+SYS_RECVFROM	syscall_desc.h	240;"	d
+SYS_RECVMMSG	syscall_desc.h	244;"	d
+SYS_RECVMSG	syscall_desc.h	242;"	d
+SYS_SOCKETPAIR	syscall_desc.h	238;"	d
+SplitString	libdft_utils.cpp	/^SplitString(const std::string& s, std::vector<std::string>& v, const std::string& c)$/;"	f
+TAG_SIZE	tagmap.h	81;"	d
+TAG_TYPE	tagmap.h	80;"	d
+TEST_MASK	tagmap.h	112;"	d
+THREAD_CTX_BLK	libdft_api.h	68;"	d
+TOOLS_DIR	Makefile	/^TOOLS_DIR	= tools$/;"	m
+TOOLS_OBJS	Makefile	/^TOOLS_OBJS	= $(TOOLS_DIR)\/libdft-dta.o$/;"	m
+TOOLS_SOBJS	Makefile	/^TOOLS_SOBJS	= $(TOOLS_OBJS:.o=.so)$/;"	m
+TOP_DIR_SZ	tagmap.h	82;"	d
+TRACKING	libdft_core.cpp	/^static BOOL TRACKING = FALSE;$/;"	v	file:
+TRACK_PFUNC	libdft_core.cpp	/^rt_ctx_t* TRACK_PFUNC;$/;"	v
+TYPE_IMM	libdft_api.h	160;"	d
+TYPE_MEM	libdft_api.h	162;"	d
+TYPE_REG	libdft_api.h	161;"	d
+UINT256_T	libdft_utils.h	/^struct UINT256_T{$/;"	s
+USE_SSE	libdft_utils.h	59;"	d
+Usage	tools/libdft-dta.cpp	/^INT32 Usage()$/;"	f
+VALUE_ID	tagmap.h	53;"	d
+VCPU_INDX	libdft_core.cpp	/^inline REG VCPU_INDX(size_t indx)$/;"	f
+VCPU_MASK16	libdft_core.h	44;"	d
+VCPU_MASK32	libdft_core.h	43;"	d
+VCPU_MASK8	libdft_core.h	45;"	d
+VIRT2OFFSET	tagmap.h	106;"	d
+VIRT2PAGE	tagmap.h	105;"	d
+VIRT2PAGETABLE	tagmap.h	102;"	d
+VIRT2PAGETABLE_OFFSET	tagmap.h	103;"	d
+WORD_MASK	tagmap.h	87;"	d
+WRITE_MASK	tagmap.h	50;"	d
+XQM_CMD	syscall_desc.h	115;"	d
+_1BYETE_OFFSET	tagmap.h	97;"	d
+_2BYTE_OFFSET	tagmap.h	98;"	d
+_3BYTE_MASK	tagmap.h	90;"	d
+_3BYTE_OFFSET	tagmap.h	99;"	d
+_5BYTE_MASK	tagmap.h	91;"	d
+_6BYTE_MASK	tagmap.h	92;"	d
+_7BYTE_MASK	tagmap.h	93;"	d
+_LINUX_LIST_H	list.h	19;"	d
+_TAG_TYPE	tagmap.h	/^} _TAG_TYPE;$/;"	t	typeref:struct:__anon15
+__BRANCH_PRED_H__	branch_pred.h	34;"	d
+__HEAP_DESC_H__	heap_desc.h	2;"	d
+__LIBCALL_DESC_H__	libcall_desc.h	2;"	d
+__LIBDFT_API_H__	libdft_api.h	34;"	d
+__LIBDFT_API_H__	libdft_log.h	2;"	d
+__LIBDFT_CORE_H__	libdft_core.h	34;"	d
+__LIBDFT_UTILS_H__	libdft_utils.h	2;"	d
+__SYSCALL_DESC_H__	syscall_desc.h	34;"	d
+__TAGMAP_H__	tagmap.h	34;"	d
+__buf	syscall_desc.h	/^	struct seminfo	*__buf;$/;"	m	union:semun	typeref:struct:semun::seminfo
+__hlist_del	list.h	/^static inline void __hlist_del(struct hlist_node *n)$/;"	f
+__list_add	list.h	/^static inline void __list_add(struct list_head *node,$/;"	f
+__list_del	list.h	/^static inline void __list_del(struct list_head * prev, struct list_head * next)$/;"	f
+__list_for_each	list.h	263;"	d
+__list_splice	list.h	/^static inline void __list_splice(struct list_head *list,$/;"	f
+__user_cap_data_struct	syscall_desc.h	/^typedef struct __user_cap_data_struct {$/;"	s
+__user_cap_header_struct	syscall_desc.h	/^typedef struct __user_cap_header_struct {$/;"	s
+_offsetof	list.h	31;"	d
+accessed_func_sets	libdft_api.cpp	/^std::set<ADDRINT> accessed_func_sets;$/;"	v
+add_to_loop	libdft_core.cpp	/^static inline void add_to_loop(ADDRINT addr, rt_ctx_t *loop_ctx)$/;"	f	file:
+addr	libdft_api.h	/^		ADDRINT		addr;$/;"	m	union:__anon7::__anon8
+addr	libdft_api.h	/^		UINT64 addr;$/;"	m	union:__anon11::__anon12
+adebug_fprintf	libdft_log.h	15;"	d
+adebug_fprintf	libdft_log.h	18;"	d
+adebug_printf	libdft_log.h	16;"	d
+adebug_printf	libdft_log.h	19;"	d
+alloc_pagetable	tagmap.cpp	/^alloc_pagetable(ADDRINT addr)$/;"	f
+alloc_tag_page	tagmap.cpp	/^void inline static alloc_tag_page(ADDRINT addr)$/;"	f	file:
+arg	libdft_api.h	/^	ADDRINT *arg;$/;"	m	struct:__anon10
+arg	libdft_api.h	/^	ADDRINT arg[SYSCALL_ARG_NUM];	\/* arguments *\/$/;"	m	struct:__anon9
+array	syscall_desc.h	/^	unsigned short	*array;$/;"	m	union:semun
+aux	libdft_api.h	/^	void	*aux;			\/* auxiliary data *\/$/;"	m	struct:__anon9
+averbose_fprintf	libdft_log.h	10;"	d
+averbose_fprintf	libdft_log.h	7;"	d
+averbose_printf	libdft_log.h	11;"	d
+averbose_printf	libdft_log.h	8;"	d
+base_addr	tagmap.h	/^		ADDRINT   base_addr; $/;"	m	struct:__anon15::__anon17
+blob	syscall_desc.h	/^	unsigned long blob[128 \/ sizeof(long)];$/;"	m	struct:getcpu_cache
+body_sid	tagmap.h	/^		UINT64	  body_sid;$/;"	m	struct:__anon15::__anon16
+buf	syscall_desc.h	/^	struct semid_ds	*buf;$/;"	m	union:semun	typeref:struct:semun::semid_ds
+call_handler	libdft_core.cpp	/^call_handler(THREADID tid, UINT64 rsp_value, ADDRINT callsite, ADDRINT target)$/;"	f	file:
+callsite	libdft_api.h	/^	ADDRINT			callsite; \/\/only valid if type is function$/;"	m	struct:__anon7
+callstack	heap_desc.h	/^	std::vector<ADDRINT> callstack;$/;"	m	struct:__anon2
+cap_user_data_t	syscall_desc.h	/^} *cap_user_data_t;$/;"	t	typeref:struct:__user_cap_data_struct
+cap_user_header_t	syscall_desc.h	/^} *cap_user_header_t;$/;"	t	typeref:struct:__user_cap_header_struct
+cflag	tagmap.h	/^		FLAG_TYPE cflag;$/;"	m	struct:__anon15::__anon16
+container_of	list.h	40;"	d
+create_loop_ctx	libdft_core.cpp	/^static inline rt_ctx_t* create_loop_ctx(THREADID tid, ADDRINT ip, UINT64 rsp)$/;"	f	file:
+d	libdft_utils.h	/^	unsigned long d[4];$/;"	m	struct:UINT256_T
+d_bcount	syscall_desc.h	/^	__u64	d_bcount;$/;"	m	struct:fs_disk_quota
+d_blk_hardlimit	syscall_desc.h	/^	__u64	d_blk_hardlimit;$/;"	m	struct:fs_disk_quota
+d_blk_softlimit	syscall_desc.h	/^	__u64	d_blk_softlimit;$/;"	m	struct:fs_disk_quota
+d_btimer	syscall_desc.h	/^	__s32	d_btimer;$/;"	m	struct:fs_disk_quota
+d_bwarns	syscall_desc.h	/^	__u16	d_bwarns;$/;"	m	struct:fs_disk_quota
+d_fieldmask	syscall_desc.h	/^	__u16	d_fieldmask;$/;"	m	struct:fs_disk_quota
+d_flags	syscall_desc.h	/^	__s8	d_flags;$/;"	m	struct:fs_disk_quota
+d_icount	syscall_desc.h	/^	__u64	d_icount;$/;"	m	struct:fs_disk_quota
+d_id	syscall_desc.h	/^	__u32	d_id;$/;"	m	struct:fs_disk_quota
+d_ino	syscall_desc.h	/^	unsigned long	d_ino;$/;"	m	struct:linux_dirent
+d_ino	syscall_desc.h	/^	unsigned long	d_ino;$/;"	m	struct:old_linux_dirent
+d_ino_hardlimit	syscall_desc.h	/^	__u64	d_ino_hardlimit;$/;"	m	struct:fs_disk_quota
+d_ino_softlimit	syscall_desc.h	/^	__u64	d_ino_softlimit;$/;"	m	struct:fs_disk_quota
+d_itimer	syscall_desc.h	/^	__s32	d_itimer;$/;"	m	struct:fs_disk_quota
+d_iwarns	syscall_desc.h	/^	__u16	d_iwarns;$/;"	m	struct:fs_disk_quota
+d_name	syscall_desc.h	/^	char		d_name[1];$/;"	m	struct:linux_dirent
+d_name	syscall_desc.h	/^	char		d_name[1];$/;"	m	struct:old_linux_dirent
+d_namlen	syscall_desc.h	/^	unsigned short	d_namlen;$/;"	m	struct:old_linux_dirent
+d_off	syscall_desc.h	/^	unsigned long	d_off;$/;"	m	struct:linux_dirent
+d_offset	syscall_desc.h	/^	unsigned long	d_offset;$/;"	m	struct:old_linux_dirent
+d_padding2	syscall_desc.h	/^	__s32	d_padding2;$/;"	m	struct:fs_disk_quota
+d_padding3	syscall_desc.h	/^	__s16	d_padding3;$/;"	m	struct:fs_disk_quota
+d_padding4	syscall_desc.h	/^	char	d_padding4[8];$/;"	m	struct:fs_disk_quota
+d_reclen	syscall_desc.h	/^	unsigned short	d_reclen;$/;"	m	struct:linux_dirent
+d_rtb_hardlimit	syscall_desc.h	/^	__u64	d_rtb_hardlimit;$/;"	m	struct:fs_disk_quota
+d_rtb_softlimit	syscall_desc.h	/^	__u64	d_rtb_softlimit;$/;"	m	struct:fs_disk_quota
+d_rtbcount	syscall_desc.h	/^	__u64	d_rtbcount;$/;"	m	struct:fs_disk_quota
+d_rtbtimer	syscall_desc.h	/^	__s32	d_rtbtimer;$/;"	m	struct:fs_disk_quota
+d_rtbwarns	syscall_desc.h	/^	__u16	d_rtbwarns;$/;"	m	struct:fs_disk_quota
+d_version	syscall_desc.h	/^	__s8	d_version;$/;"	m	struct:fs_disk_quota
+deref_mem	libdft_core.cpp	/^deref_mem(THREADID tid, const CONTEXT* ctxt, $/;"	f	file:
+dflag	tagmap.h	/^		FLAG_TYPE dflag;$/;"	m	struct:__anon15::__anon17
+dfs_insert	libdft_core.cpp	/^static void dfs_insert(ADDRINT addr, UINT64 loops_iter, rt_ctx_t* ploop, ARRAY_SET_T *parray)$/;"	f	file:
+directory	tagmap.cpp	/^TAG_TYPE ***directory = NULL;$/;"	v
+dlength	heap_desc.h	/^	UINT32 dlength;$/;"	m	struct:__anon2
+dlength	tagmap.h	/^		UINT32    dlength;$/;"	m	struct:__anon15::__anon16
+dmaps	libdft_api.h	/^	std::vector<std::set<ADDRINT>* > *dmaps; \/* record memory access for each iteration *\/$/;"	m	struct:__anon7
+dqb_bhardlimit	syscall_desc.h	/^	__u64 dqb_bhardlimit;$/;"	m	struct:if_dqblk
+dqb_bsoftlimit	syscall_desc.h	/^	__u64 dqb_bsoftlimit;$/;"	m	struct:if_dqblk
+dqb_btime	syscall_desc.h	/^	__u64 dqb_btime;$/;"	m	struct:if_dqblk
+dqb_curinodes	syscall_desc.h	/^	__u64 dqb_curinodes;$/;"	m	struct:if_dqblk
+dqb_curspace	syscall_desc.h	/^	__u64 dqb_curspace;$/;"	m	struct:if_dqblk
+dqb_ihardlimit	syscall_desc.h	/^	__u64 dqb_ihardlimit;$/;"	m	struct:if_dqblk
+dqb_isoftlimit	syscall_desc.h	/^	__u64 dqb_isoftlimit;$/;"	m	struct:if_dqblk
+dqb_itime	syscall_desc.h	/^	__u64 dqb_itime;$/;"	m	struct:if_dqblk
+dqb_valid	syscall_desc.h	/^	__u32 dqb_valid;$/;"	m	struct:if_dqblk
+dqi_bgrace	syscall_desc.h	/^	__u64 dqi_bgrace;$/;"	m	struct:if_dqinfo
+dqi_flags	syscall_desc.h	/^	__u32 dqi_flags;$/;"	m	struct:if_dqinfo
+dqi_igrace	syscall_desc.h	/^	__u64 dqi_igrace;$/;"	m	struct:if_dqinfo
+dqi_valid	syscall_desc.h	/^	__u32 dqi_valid;$/;"	m	struct:if_dqinfo
+dtags	heap_desc.h	/^	TAG_TYPE *dtags;$/;"	m	struct:__anon2
+dtags	tagmap.h	/^		void*	  dtags;$/;"	m	struct:__anon15::__anon16
+effective	syscall_desc.h	/^	__u32 effective;$/;"	m	struct:__user_cap_data_struct
+entry	libcall_desc.h	/^	ADDRINT entry; \/* entry address in plt table *\/$/;"	m	struct:__anon4
+exit	libdft_api.h	/^	ADDRINT exit;			\/* return address of current function*\/$/;"	m	struct:__anon10
+fMergeLog	libdft_api.cpp	/^FILE* fMergeLog;$/;"	v
+f_handle	syscall_desc.h	/^	unsigned char f_handle[0];    \/* File identifier (sized by caller) [out] *\/$/;"	m	struct:file_handle
+fake_memop	libdft_api.h	/^	UINT64          fake_memop; \/* for memory dereference*\/$/;"	m	struct:__anon13
+file_handle	syscall_desc.h	/^struct file_handle {$/;"	s
+finish	libdft_api.cpp	/^void finish(INT32 code, VOID *v)$/;"	f
+first	list.h	/^	struct hlist_node *first;$/;"	m	struct:hlist_head	typeref:struct:hlist_head::hlist_node
+frame_rsp	libdft_api.h	/^	ADDRINT 		frame_rsp;$/;"	m	struct:__anon13
+free_callback	libcall_desc.cpp	/^void free_callback()$/;"	f
+fs_disk_quota	syscall_desc.h	/^struct fs_disk_quota {$/;"	s
+fs_qfilestat	syscall_desc.h	/^typedef struct fs_qfilestat {$/;"	s
+fs_qfilestat_t	syscall_desc.h	/^} fs_qfilestat_t;$/;"	t	typeref:struct:fs_qfilestat
+fs_quota_stat	syscall_desc.h	/^struct fs_quota_stat {$/;"	s
+func_lookup	libdft_core.cpp	/^rt_ctx_t* func_lookup(THREADID tid, ADDRINT addr)$/;"	f
+gcd	libdft_utils.cpp	/^gcd(int u, int v)$/;"	f
+gcd_binary	libdft_utils.cpp	/^gcd_binary(uint32_t u, uint32_t v)$/;"	f	file:
+gcd_table	libdft_utils.cpp	/^static const int gcd_table[GCD_MAX + 1][GCD_MAX + 1] = {$/;"	v	file:
+getMD5	heap_desc.cpp	/^void getMD5(THREADID tid, UINT256_T *md5_256)$/;"	f
+get_rsp	libdft_core.cpp	/^static ADDRINT get_rsp(THREADID tid)$/;"	f	file:
+getcpu_cache	syscall_desc.h	/^struct getcpu_cache {$/;"	s
+git_t	syscall_desc.h	/^typedef __u64 git_t;$/;"	t
+gpr	libdft_api.h	/^	TAG_TYPE gpr[GRP_NUM + 1];$/;"	m	struct:__anon6
+handle_bytes	syscall_desc.h	/^	unsigned int  handle_bytes;   \/* Size of f_handle [in, out] *\/$/;"	m	struct:file_handle
+handle_type	syscall_desc.h	/^	int           handle_type;    \/* Handle type [out] *\/$/;"	m	struct:file_handle
+heap_ctx_map	heap_desc.cpp	/^heap_ctx_map_t heap_ctx_map;$/;"	v
+heap_ctx_map_t	heap_desc.h	/^typedef std::map<ADDRINT, heap_ctx_t*> heap_ctx_map_t;$/;"	t
+heap_ctx_t	heap_desc.h	/^} heap_ctx_t;$/;"	t	typeref:struct:__anon3
+heap_desc_map	heap_desc.cpp	/^heap_desc_map_t heap_desc_map;$/;"	v
+heap_desc_map_t	heap_desc.h	/^typedef std::map<UINT256_T, heap_desc_t*> heap_desc_map_t;$/;"	t
+heap_desc_t	heap_desc.h	/^} heap_desc_t;$/;"	t	typeref:struct:__anon2
+heap_lookup	heap_desc.cpp	/^heap_ctx_t* heap_lookup(ADDRINT addr)$/;"	f
+highest_rsp	libdft_api.h	/^	ADDRINT 		highest_rsp;$/;"	m	struct:__anon13
+hlist_add_after	list.h	/^static inline void hlist_add_after(struct hlist_node *n,$/;"	f
+hlist_add_before	list.h	/^static inline void hlist_add_before(struct hlist_node *n,$/;"	f
+hlist_add_head	list.h	/^static inline void hlist_add_head(struct hlist_node *n, struct hlist_head *h)$/;"	f
+hlist_del	list.h	/^static inline void hlist_del(struct hlist_node *n)$/;"	f
+hlist_del_init	list.h	/^static inline void hlist_del_init(struct hlist_node *n)$/;"	f
+hlist_empty	list.h	/^static inline int hlist_empty(const struct hlist_head *h)$/;"	f
+hlist_entry	list.h	463;"	d
+hlist_for_each	list.h	465;"	d
+hlist_for_each_entry	list.h	480;"	d
+hlist_for_each_entry_continue	list.h	492;"	d
+hlist_for_each_entry_from	list.h	504;"	d
+hlist_for_each_entry_safe	list.h	517;"	d
+hlist_for_each_safe	list.h	469;"	d
+hlist_head	list.h	/^struct hlist_head {$/;"	s
+hlist_node	list.h	/^struct hlist_node {$/;"	s
+hlist_unhashed	list.h	/^static inline int hlist_unhashed(const struct hlist_node *h)$/;"	f
+if_dqblk	syscall_desc.h	/^struct if_dqblk {$/;"	s
+if_dqinfo	syscall_desc.h	/^struct if_dqinfo {$/;"	s
+img_ctx_t	libdft_api.h	/^} img_ctx_t;$/;"	t	typeref:struct:__anon5
+img_inspect	libdft_api.cpp	/^img_inspect(IMG img, VOID *v)$/;"	f	file:
+img_map	libdft_api.cpp	/^img_map_t *img_map = NULL;$/;"	v
+img_map_t	libdft_api.h	/^typedef std::map<ADDRINT, img_ctx_t* > img_map_t;$/;"	t
+imm_record	libdft_core.cpp	/^imm_record(THREADID tid, UINT32 imm, UINT8 indx)$/;"	f	file:
+inbetween_exclusive	libdft_utils.h	69;"	d
+inbetween_inclusive	libdft_utils.h	67;"	d
+inheritable	syscall_desc.h	/^	__u32 inheritable;$/;"	m	struct:__user_cap_data_struct
+ins_clr_post	libdft_api.cpp	/^ins_clr_post(syscall_desc_t *desc)$/;"	f
+ins_clr_pre	libdft_api.cpp	/^ins_clr_pre(ins_desc_t *desc)$/;"	f
+ins_desc	libdft_api.cpp	/^ins_desc_t ins_desc[XED_ICLASS_LAST];$/;"	v
+ins_desc_t	libdft_api.h	/^} ins_desc_t;$/;"	t	typeref:struct:__anon14
+ins_inspect	libdft_core.cpp	/^ins_inspect(INS ins)$/;"	f
+ins_set_post	libdft_api.cpp	/^ins_set_post(ins_desc_t *desc, void (* post)(INS))$/;"	f
+ins_set_pre	libdft_api.cpp	/^ins_set_pre(ins_desc_t *desc, void (* pre)(INS))$/;"	f
+ip	libdft_api.h	/^	ADDRINT ip;				\/* where the lib function is invoked, help for output*\/$/;"	m	struct:__anon10
+isMain	libdft_api.h	/^	BOOL isMain;$/;"	m	struct:__anon5
+isPointer	tagmap.h	/^		BOOL      isPointer;$/;"	m	struct:__anon15::__anon17
+iterations	libdft_api.h	/^	UINT64			iterations;$/;"	m	struct:__anon7
+laddr	libdft_api.h	/^	ADDRINT laddr;$/;"	m	struct:__anon5
+lib	libcall_desc.h	/^	const char* lib;$/;"	m	struct:__anon4
+libcall_clr_post	libcall_desc.cpp	/^libcall_clr_post(libcall_desc_t *desc)$/;"	f
+libcall_clr_pre	libcall_desc.cpp	/^libcall_clr_pre(libcall_desc_t *desc)$/;"	f
+libcall_ctx	libdft_api.h	/^	libcall_ctx_t	libcall_ctx;$/;"	m	struct:__anon13
+libcall_ctx_t	libdft_api.h	/^} libcall_ctx_t;$/;"	t	typeref:struct:__anon10
+libcall_desc	libcall_desc.cpp	/^libcall_desc_t libcall_desc[LIBCALL_MAX] = {$/;"	v
+libcall_desc_t	libcall_desc.h	/^} libcall_desc_t;$/;"	t	typeref:struct:__anon4
+libcall_img_inspect	libcall_desc.cpp	/^VOID libcall_img_inspect(IMG img, VOID *v)$/;"	f
+libcall_set_post	libcall_desc.cpp	/^libcall_set_post(libcall_desc_t *desc, void (* post)(libcall_ctx_t*))$/;"	f
+libcall_set_pre	libcall_desc.cpp	/^libcall_set_pre(libcall_desc_t *desc, void (* pre)(libcall_ctx_t*))$/;"	f
+libcall_trace_inspect	libcall_desc.cpp	/^VOID libcall_trace_inspect(TRACE trace, VOID *v)$/;"	f
+libdft_die	libdft_api.cpp	/^libdft_die(void)$/;"	f
+libdft_init	libdft_api.cpp	/^libdft_init(int argc, char **argv)$/;"	f
+libdft_start	libdft_api.cpp	/^libdft_start(void)$/;"	f
+libenter_save	libcall_desc.cpp	/^libenter_save(THREADID tid, CONTEXT* ctxt, ADDRINT ip, uint32_t index, ADDRINT return_ip)$/;"	f	file:
+libexit_save	libcall_desc.cpp	/^libexit_save(THREADID tid, CONTEXT* ctxt, ADDRINT ip)$/;"	f	file:
+likely	branch_pred.h	37;"	d
+linux_dirent	syscall_desc.h	/^struct linux_dirent {$/;"	s
+list_add	list.h	/^static inline void list_add(struct list_head *node, struct list_head *head)$/;"	f
+list_add_tail	list.h	/^static inline void list_add_tail(struct list_head *node, struct list_head *head)$/;"	f
+list_del	list.h	/^static inline void list_del(struct list_head *entry)$/;"	f
+list_del_init	list.h	/^static inline void list_del_init(struct list_head *entry)$/;"	f
+list_empty	list.h	/^static inline int list_empty(const struct list_head *head)$/;"	f
+list_entry	list.h	240;"	d
+list_for_each	list.h	249;"	d
+list_for_each_entry	list.h	291;"	d
+list_for_each_entry_continue	list.h	324;"	d
+list_for_each_entry_reverse	list.h	302;"	d
+list_for_each_entry_safe	list.h	336;"	d
+list_for_each_entry_safe_continue	list.h	350;"	d
+list_for_each_entry_safe_reverse	list.h	364;"	d
+list_for_each_prev	list.h	271;"	d
+list_for_each_safe	list.h	281;"	d
+list_head	list.h	/^struct list_head {$/;"	s
+list_head_t	list.h	/^typedef struct list_head list_head_t;$/;"	t	typeref:struct:list_head
+list_move	list.h	/^static inline void list_move(struct list_head *list, struct list_head *head)$/;"	f
+list_move_tail	list.h	/^static inline void list_move_tail(struct list_head *list,$/;"	f
+list_prepare_entry	list.h	314;"	d
+list_splice	list.h	/^static inline void list_splice(struct list_head *list, struct list_head *head)$/;"	f
+list_splice_init	list.h	/^static inline void list_splice_init(struct list_head *list,$/;"	f
+load_heap_taint	heap_desc.cpp	/^void load_heap_taint(ADDRINT root, UINT32 size, TAG_TYPE* ptag_src, UINT32 src_len)$/;"	f
+load_taint	libdft_core.cpp	/^static void load_taint(ADDRINT root, TAG_TYPE* ctag)$/;"	f	file:
+locate_img	libdft_api.cpp	/^img_ctx_t* locate_img(ADDRINT faddr)$/;"	f
+loop_access_size	tagmap.h	/^		UINT8	  loop_access_size;$/;"	m	struct:__anon15::__anon17
+loop_base	tagmap.h	/^		ADDRINT   loop_base;$/;"	m	struct:__anon15::__anon17
+loop_head	tagmap.h	/^		ADDRINT	  loop_head;$/;"	m	struct:__anon15::__anon16
+lowest_rsp	libdft_api.h	/^	ADDRINT			lowest_rsp;$/;"	m	struct:__anon13
+m2m_set	libdft_core.cpp	/^m2m_set(THREADID tid, ADDRINT src_addr, UINT64 old_content, ADDRINT dst_addr, UINT32 size)$/;"	f	file:
+m2r_set	libdft_core.cpp	/^m2r_set(THREADID tid, UINT32 reg_indx, ADDRINT addr)$/;"	f	file:
+m2r_set_fast	libdft_core.cpp	/^m2r_set_fast(THREADID tid, UINT32 reg_indx, ADDRINT addr)$/;"	f	file:
+m_clrn	libdft_core.cpp	/^m_clrn(ADDRINT addr, UINT32 len)$/;"	f	file:
+m_clrn_fast	libdft_core.cpp	/^m_clrn_fast(ADDRINT addr, UINT32 len)$/;"	f	file:
+main	tools/libdft-dta.cpp	/^main(int argc, char **argv, char* envp[])$/;"	f
+map_args	syscall_desc.h	/^	size_t map_args[SYSCALL_ARG_NUM];	\/* arguments map *\/$/;"	m	struct:__anon1
+max	libdft_utils.h	64;"	d
+md5	heap_desc.h	/^	UINT256_T md5;$/;"	m	struct:__anon2
+md5	heap_desc.h	/^	UINT256_T md5;$/;"	m	struct:__anon3
+mem_record	libdft_core.cpp	/^mem_record(THREADID tid, ADDRINT addr, UINT8 indx)$/;"	f	file:
+merge_type_inst	libdft_core.cpp	/^merge_type_inst(THREADID tid, ADDRINT addr, ADDRINT rip)$/;"	f	file:
+merge_type_val_post	libdft_core.cpp	/^merge_type_val_post(THREADID tid)$/;"	f	file:
+merge_type_val_pre	libdft_core.cpp	/^merge_type_val_pre(THREADID tid, ADDRINT addr)$/;"	f	file:
+min	libdft_utils.h	63;"	d
+name	libcall_desc.h	/^	const char* name;$/;"	m	struct:__anon4
+name	libdft_api.h	/^	string name;$/;"	m	struct:__anon5
+nargs	libcall_desc.h	/^	int nargs; \/* number of arguments *\/$/;"	m	struct:__anon4
+nargs	syscall_desc.h	/^	size_t nargs;			\/* number of arguments *\/$/;"	m	struct:__anon1
+next	list.h	/^	struct hlist_node *next, **pprev;$/;"	m	struct:hlist_node	typeref:struct:hlist_node::hlist_node
+next	list.h	/^	struct list_head *next, *prev;$/;"	m	struct:list_head	typeref:struct:list_head::list_head
+nr	libdft_api.h	/^	int 	nr;			\/* libcall number *\/$/;"	m	struct:__anon10
+nr	libdft_api.h	/^	int 	nr;			\/* syscall number *\/$/;"	m	struct:__anon9
+old_gid_t	syscall_desc.h	/^typedef	__kernel_old_gid_t	old_gid_t;$/;"	t
+old_linux_dirent	syscall_desc.h	/^struct old_linux_dirent {$/;"	s
+old_sigset_t	syscall_desc.h	/^typedef unsigned long old_sigset_t;$/;"	t
+old_uid_t	syscall_desc.h	/^typedef	__kernel_old_uid_t	old_uid_t;$/;"	t
+operator <	libdft_utils.h	/^	bool operator<(const UINT256_T& a) const$/;"	f	struct:UINT256_T
+operator =	libdft_utils.h	/^	UINT256_T& operator=(const UINT256_T& a)$/;"	f	struct:UINT256_T
+operator ==	libdft_utils.h	/^	bool operator==(const UINT256_T& a) const$/;"	f	struct:UINT256_T
+opnd	libdft_api.h	/^	opnd_t 			opnd[3];$/;"	m	struct:__anon13
+opnd_t	libdft_api.h	/^} opnd_t;$/;"	t	typeref:struct:__anon11
+pdesc	heap_desc.h	/^	heap_desc_t *pdesc;$/;"	m	struct:__anon3
+permitted	syscall_desc.h	/^	__u32 permitted;$/;"	m	struct:__user_cap_data_struct
+pid	syscall_desc.h	/^	int pid;$/;"	m	struct:__user_cap_header_struct
+popUntilFunc	libdft_core.cpp	/^static void popUntilFunc(THREADID tid){$/;"	f	file:
+pop_loop	libdft_core.cpp	/^static void pop_loop(THREADID tid, ADDRINT ip, UINT64 rsp, TAG_TYPE* ctag)$/;"	f	file:
+pop_mem	libdft_core.cpp	/^pop_mem(THREADID tid, ADDRINT src_addr, ADDRINT dst_addr)$/;"	f	file:
+pop_mem_fast	libdft_core.cpp	/^pop_mem_fast(THREADID tid, ADDRINT src_addr, ADDRINT dst_addr)$/;"	f	file:
+pop_reg	libdft_core.cpp	/^pop_reg(THREADID tid, UINT32 reg_indx, ADDRINT addr)$/;"	f	file:
+pop_reg_fast	libdft_core.cpp	/^pop_reg_fast(THREADID tid, UINT32 reg_indx, ADDRINT addr)$/;"	f	file:
+post	libcall_desc.h	/^	void (* post)(libcall_ctx_t*);$/;"	m	struct:__anon4
+post	libdft_api.h	/^	void (* post)(INS ins);		\/* post-ins instrumentation callback *\/$/;"	m	struct:__anon14
+post	syscall_desc.h	/^	void (* post)(THREADID,syscall_ctx_t*);	\/* post-syscall callback *\/$/;"	m	struct:__anon1
+post_brk_hook	syscall_desc.cpp	/^post_brk_hook(THREADID tid, syscall_ctx_t *ctx)$/;"	f	file:
+post_epoll_wait_hook	syscall_desc.cpp	/^post_epoll_wait_hook(THREADID tid, syscall_ctx_t *ctx)$/;"	f	file:
+post_fcntl_hook	syscall_desc.cpp	/^post_fcntl_hook(THREADID tid, syscall_ctx_t *ctx)$/;"	f	file:
+post_fstat64_hook	syscall_desc.cpp	/^post_fstat64_hook(THREADID tid, syscall_ctx_t *ctx)$/;"	f	file:
+post_get_mempolicy_hook	syscall_desc.cpp	/^post_get_mempolicy_hook(THREADID tid, syscall_ctx_t *ctx)$/;"	f	file:
+post_getcwd_hook	syscall_desc.cpp	/^post_getcwd_hook(THREADID tid, syscall_ctx_t *ctx)$/;"	f	file:
+post_getdents_hook	syscall_desc.cpp	/^post_getdents_hook(THREADID tid, syscall_ctx_t *ctx)$/;"	f	file:
+post_getgroups_hook	syscall_desc.cpp	/^post_getgroups_hook(THREADID tid, syscall_ctx_t *ctx)$/;"	f	file:
+post_getxattr_hook	syscall_desc.cpp	/^post_getxattr_hook(THREADID tid, syscall_ctx_t *ctx)$/;"	f	file:
+post_io_getevents_hook	syscall_desc.cpp	/^post_io_getevents_hook(THREADID tid, syscall_ctx_t *ctx)$/;"	f	file:
+post_ioctl_hook	syscall_desc.cpp	/^post_ioctl_hook(THREADID tid, syscall_ctx_t *ctx)$/;"	f	file:
+post_listxattr_hook	syscall_desc.cpp	/^post_listxattr_hook(THREADID tid, syscall_ctx_t *ctx)$/;"	f	file:
+post_lookup_dcookie_hook	syscall_desc.cpp	/^post_lookup_dcookie_hook(THREADID tid, syscall_ctx_t *ctx)$/;"	f	file:
+post_malloc_hook	libcall_desc.cpp	/^static void post_malloc_hook(libcall_ctx_t* ctx)$/;"	f	file:
+post_mincore_hook	syscall_desc.cpp	/^post_mincore_hook(THREADID tid, syscall_ctx_t *ctx)$/;"	f	file:
+post_mmap_hook	syscall_desc.cpp	/^post_mmap_hook(THREADID tid, syscall_ctx_t *ctx)$/;"	f	file:
+post_mq_timedreceive_hook	syscall_desc.cpp	/^post_mq_timedreceive_hook(THREADID tid, syscall_ctx_t *ctx)$/;"	f	file:
+post_poll_hook	syscall_desc.cpp	/^post_poll_hook(THREADID tid, syscall_ctx_t *ctx)$/;"	f	file:
+post_quotactl_hook	syscall_desc.cpp	/^post_quotactl_hook(THREADID tid, syscall_ctx_t *ctx)$/;"	f	file:
+post_read_hook	syscall_desc.cpp	/^post_read_hook(THREADID tid, syscall_ctx_t *ctx)$/;"	f	file:
+post_readlinkat_hook	syscall_desc.cpp	/^post_readlinkat_hook(THREADID tid, syscall_ctx_t *ctx)$/;"	f	file:
+post_readv_hook	syscall_desc.cpp	/^post_readv_hook(THREADID tid, syscall_ctx_t *ctx)$/;"	f	file:
+post_rt_sigpending_hook	syscall_desc.cpp	/^post_rt_sigpending_hook(THREADID tid, syscall_ctx_t *ctx)$/;"	f	file:
+post_sysctl_hook	syscall_desc.cpp	/^post_sysctl_hook(THREADID tid, syscall_ctx_t *ctx)$/;"	f	file:
+post_syslog_hook	syscall_desc.cpp	/^post_syslog_hook(THREADID tid, syscall_ctx_t *ctx)$/;"	f	file:
+pprev	list.h	/^	struct hlist_node *next, **pprev;$/;"	m	struct:hlist_node	typeref:struct:hlist_node::
+pre	libcall_desc.h	/^	void (* pre)(libcall_ctx_t*);$/;"	m	struct:__anon4
+pre	libdft_api.h	/^	void (* pre)(INS ins);		\/* pre-ins instrumentation callback *\/$/;"	m	struct:__anon14
+pre	syscall_desc.h	/^	void (* pre)(THREADID,syscall_ctx_t*);	\/* pre-syscall callback *\/$/;"	m	struct:__anon1
+pre_free_hook	libcall_desc.cpp	/^static void pre_free_hook(libcall_ctx_t* ctx)$/;"	f	file:
+prev	list.h	/^	struct list_head *next, *prev;$/;"	m	struct:list_head	typeref:struct:list_head::
+ptag	libdft_api.h	/^	TAG_TYPE *ptag;$/;"	m	struct:__anon11
+push_loop	libdft_core.cpp	/^static void push_loop(THREADID tid, ADDRINT ip, UINT64 rsp, TAG_TYPE* ctag)$/;"	f	file:
+push_mem	libdft_core.cpp	/^push_mem(THREADID tid, ADDRINT src_addr, ADDRINT dst_addr)$/;"	f	file:
+push_mem_fast	libdft_core.cpp	/^push_mem_fast(THREADID tid, ADDRINT src_addr, ADDRINT dst_addr)$/;"	f	file:
+push_reg	libdft_core.cpp	/^push_reg(THREADID tid, UINT32 reg_indx, ADDRINT addr)$/;"	f	file:
+push_reg_fast	libdft_core.cpp	/^push_reg_fast(THREADID tid, UINT32 reg_indx, ADDRINT addr)$/;"	f	file:
+qfs_ino	syscall_desc.h	/^	__u64 qfs_ino;$/;"	m	struct:fs_qfilestat
+qfs_nblks	syscall_desc.h	/^	__u64 qfs_nblks;$/;"	m	struct:fs_qfilestat
+qfs_nextents	syscall_desc.h	/^	__u32 qfs_nextents;$/;"	m	struct:fs_qfilestat
+qs_btimelimit	syscall_desc.h	/^	__s32		qs_btimelimit;$/;"	m	struct:fs_quota_stat
+qs_bwarnlimit	syscall_desc.h	/^	__u16		qs_bwarnlimit;$/;"	m	struct:fs_quota_stat
+qs_flag	syscall_desc.h	/^	__u16		qs_flag;$/;"	m	struct:fs_quota_stat
+qs_gquota	syscall_desc.h	/^	fs_qfilestat_t	qs_gquota;$/;"	m	struct:fs_quota_stat
+qs_incoredqs	syscall_desc.h	/^	__u32		qs_incoredqs;$/;"	m	struct:fs_quota_stat
+qs_itimelimit	syscall_desc.h	/^	__s32		qs_itimelimit;$/;"	m	struct:fs_quota_stat
+qs_iwarnlimit	syscall_desc.h	/^	__u16		qs_iwarnlimit;$/;"	m	struct:fs_quota_stat
+qs_pad	syscall_desc.h	/^	__s8		qs_pad;$/;"	m	struct:fs_quota_stat
+qs_rtbtimelimit	syscall_desc.h	/^	__s32		qs_rtbtimelimit;$/;"	m	struct:fs_quota_stat
+qs_uquota	syscall_desc.h	/^	fs_qfilestat_t	qs_uquota;$/;"	m	struct:fs_quota_stat
+qs_version	syscall_desc.h	/^	__s8		qs_version;$/;"	m	struct:fs_quota_stat
+r2m_set	libdft_core.cpp	/^r2m_set(THREADID tid, UINT32 reg_indx, ADDRINT addr, const CONTEXT* ctxt, UINT32 size)$/;"	f	file:
+r2m_set_fast	libdft_core.cpp	/^r2m_set_fast(THREADID tid, UINT32 reg_indx, ADDRINT addr, const CONTEXT *ctxt)$/;"	f	file:
+r2r_set	libdft_core.cpp	/^r2r_set(THREADID tid, UINT32 src_indx, UINT32 dst_indx)$/;"	f	file:
+r2r_set_fast	libdft_core.cpp	/^r2r_set_fast(THREADID tid, UINT32 src_indx, UINT32 dst_indx)$/;"	f	file:
+r_clr	libdft_core.cpp	/^r_clr(THREADID tid, UINT32 reg_indx)$/;"	f	file:
+r_clr_fast	libdft_core.cpp	/^r_clr_fast(THREADID tid, UINT32 reg_indx)$/;"	f	file:
+read_funcs	libdft_api.cpp	/^static void read_funcs(const std::string &fname, FLAG_TYPE mask, ADDRINT laddr)$/;"	f	file:
+read_heap_taint	libdft_api.cpp	/^static void read_heap_taint(const std::string &fname)$/;"	f	file:
+read_loops	libdft_api.cpp	/^static void read_loops(const std::string &fname, ADDRINT laddr)$/;"	f	file:
+read_stack_taint	libdft_api.cpp	/^static void read_stack_taint(const std::string &fname, ADDRINT laddr)$/;"	f	file:
+reg	libdft_api.h	/^		REG reg;$/;"	m	union:__anon11::__anon12
+reg_record	libdft_core.cpp	/^reg_record(THREADID tid, const CONTEXT* ctxt, REG reg, UINT8 indx)$/;"	f	file:
+ret	libdft_api.h	/^	ADDRINT ret;			\/* return value *\/$/;"	m	struct:__anon10
+ret	libdft_api.h	/^	ADDRINT ret;			\/* return value *\/$/;"	m	struct:__anon9
+return_handler	libdft_core.cpp	/^return_handler(THREADID tid, UINT64 rsp_value, ADDRINT retsite, ADDRINT target)$/;"	f	file:
+retval_args	syscall_desc.h	/^	size_t retval_args;		\/* flag; returns value in arguments *\/$/;"	m	struct:__anon1
+rid	libdft_api.h	/^	UINT64			rid;$/;"	m	struct:__anon7
+rid	libdft_api.h	/^	UINT64 		    rid;$/;"	m	struct:__anon13
+rsp	libdft_api.h	/^	ADDRINT     	rsp; \/* caller rsp *\/$/;"	m	struct:__anon7
+rt_ctx_t	libdft_api.h	/^}rt_ctx_t;$/;"	t	typeref:struct:__anon7
+rt_stack	libdft_api.h	/^	list_head_t 	rt_stack; \/* runtime stack of routine*\/$/;"	m	struct:__anon7
+rt_stack_head	libdft_api.h	/^	list_head_t     rt_stack_head; \/* head of the runtime stack of routine *\/$/;"	m	struct:__anon13
+sanity_check_rtx	libdft_core.cpp	/^static BOOL sanity_check_rtx(THREADID tid){$/;"	f	file:
+save_args	syscall_desc.h	/^	size_t save_args;		\/* flag; save arguments *\/$/;"	m	struct:__anon1
+sched_attr	syscall_desc.h	/^struct sched_attr {$/;"	s
+sched_deadline	syscall_desc.h	/^	__u64 sched_deadline;$/;"	m	struct:sched_attr
+sched_flags	syscall_desc.h	/^	__u64 sched_flags;$/;"	m	struct:sched_attr
+sched_nice	syscall_desc.h	/^	__s32 sched_nice;$/;"	m	struct:sched_attr
+sched_period	syscall_desc.h	/^	__u64 sched_period;$/;"	m	struct:sched_attr
+sched_policy	syscall_desc.h	/^	__u32 sched_policy;$/;"	m	struct:sched_attr
+sched_priority	syscall_desc.h	/^	__u32 sched_priority;$/;"	m	struct:sched_attr
+sched_runtime	syscall_desc.h	/^	__u64 sched_runtime;$/;"	m	struct:sched_attr
+select_base	libdft_core.cpp	/^select_base(THREADID tid, ADDRINT addr, ADDRINT new_base, UINT32 size, BOOL checkloop)$/;"	f	file:
+semun	syscall_desc.h	/^union semun {$/;"	u
+sid	libdft_api.h	/^		UINT64		sid;$/;"	m	union:__anon7::__anon8
+sid	tagmap.h	/^		UINT64    sid;$/;"	m	struct:__anon15::__anon16
+size	heap_desc.h	/^	UINT32	size;$/;"	m	struct:__anon3
+size	syscall_desc.h	/^	__u32 size;$/;"	m	struct:sched_attr
+size	tagmap.h	/^		UINT8     size;$/;"	m	struct:__anon15::__anon17
+start	heap_desc.h	/^	ADDRINT start;$/;"	m	struct:__anon3
+store_heap_taint	heap_desc.cpp	/^void store_heap_taint(ADDRINT root, UINT32 size, heap_desc_t* heap_desc)$/;"	f
+store_taint	libdft_core.cpp	/^static void store_taint(THREADID tid, rt_ctx_t* pfunc)$/;"	f	file:
+sync_loop	libdft_core.cpp	/^static void sync_loop(THREADID tid, rt_ctx_t* ploop)$/;"	f	file:
+sync_opnd_after	libdft_core.cpp	/^sync_opnd_after(THREADID tid, const CONTEXT* ctxt, UINT32 size)$/;"	f	file:
+syscall_clr_post	syscall_desc.cpp	/^syscall_clr_post(syscall_desc_t *desc)$/;"	f
+syscall_clr_pre	syscall_desc.cpp	/^syscall_clr_pre(syscall_desc_t *desc)$/;"	f
+syscall_ctx	libdft_api.h	/^	syscall_ctx_t	syscall_ctx;	\/* syscall context *\/$/;"	m	struct:__anon13
+syscall_ctx_t	libdft_api.h	/^} syscall_ctx_t;$/;"	t	typeref:struct:__anon9
+syscall_desc	syscall_desc.cpp	/^syscall_desc_t syscall_desc[SYSCALL_MAX] = {$/;"	v
+syscall_desc_t	syscall_desc.h	/^} syscall_desc_t;$/;"	t	typeref:struct:__anon1
+syscall_nr	libdft_api.h	/^	UINT32			syscall_nr;$/;"	m	struct:__anon13
+syscall_set_post	syscall_desc.cpp	/^syscall_set_post(syscall_desc_t *desc, void (* post)(THREADID, syscall_ctx_t*))$/;"	f
+syscall_set_pre	syscall_desc.cpp	/^syscall_set_pre(syscall_desc_t *desc, void (* pre)(THREADID, syscall_ctx_t*))$/;"	f
+sysenter_save	libdft_api.cpp	/^sysenter_save(THREADID tid, CONTEXT *ctx, SYSCALL_STANDARD std, VOID *v)$/;"	f	file:
+sysexit_save	libdft_api.cpp	/^sysexit_save(THREADID tid, CONTEXT *ctx, SYSCALL_STANDARD std, VOID *v)$/;"	f	file:
+tagmap_alloc	tagmap.cpp	/^tagmap_alloc(void)$/;"	f
+tagmap_clrb	tagmap.cpp	/^tagmap_clrb(ADDRINT addr)$/;"	f
+tagmap_clrn	tagmap.cpp	/^tagmap_clrn(ADDRINT addr, UINT32 num)$/;"	f
+tagmap_free	tagmap.cpp	/^tagmap_free(void)$/;"	f
+tagmap_get_ref	tagmap.cpp	/^tagmap_get_ref(ADDRINT addr)$/;"	f
+tagmap_getb	tagmap.cpp	/^tagmap_getb(ADDRINT addr)$/;"	f
+tagmap_getl	tagmap.cpp	/^tagmap_getl(ADDRINT addr, TAG_TYPE *ret)$/;"	f
+tagmap_getn	tagmap.cpp	/^tagmap_getn(ADDRINT addr, TAG_TYPE *ret, UINT32 num)$/;"	f
+tagmap_setb	tagmap.cpp	/^tagmap_setb(ADDRINT addr, TAG_TYPE tag)$/;"	f
+tagmap_setn	tagmap.cpp	/^tagmap_setn(ADDRINT addr, TAG_TYPE *tags, UINT32 num)$/;"	f
+tagmap_testb	tagmap.cpp	/^tagmap_testb(ADDRINT addr)$/;"	f
+tctx_ct	libdft_api.cpp	/^static size_t tctx_ct = 0;$/;"	v	file:
+temp_base	tagmap.h	/^		ADDRINT   temp_base;$/;"	m	struct:__anon15::__anon17
+thread_alloc	libdft_api.cpp	/^thread_alloc(THREADID tid, CONTEXT *ctx, INT32 flags, VOID *v)$/;"	f	file:
+thread_ctx_init	libdft_api.cpp	/^thread_ctx_init(void)$/;"	f	file:
+thread_ctx_t	libdft_api.h	/^} thread_ctx_t;$/;"	t	typeref:struct:__anon13
+threads_ctx	libdft_api.cpp	/^thread_ctx_t *threads_ctx = NULL;$/;"	v
+tid	libdft_api.h	/^	THREADID tid;$/;"	m	struct:__anon10
+trace_inspect	libdft_api.cpp	/^trace_inspect(TRACE trace, VOID *v)$/;"	f	file:
+type	libdft_api.h	/^	UINT8			type;$/;"	m	struct:__anon7
+type	libdft_api.h	/^	UINT8 type;$/;"	m	struct:__anon11
+u32	syscall_desc.h	/^typedef __u32 u32;$/;"	t
+unlikely	branch_pred.h	38;"	d
+update_rsp	libdft_core.cpp	/^update_rsp(THREADID tid, ADDRINT ip, UINT64 rsp, char* str, const CONTEXT *ctxt)$/;"	f	file:
+val	syscall_desc.h	/^	int		val;$/;"	m	union:semun
+value	libdft_api.h	/^	UINT64 value;$/;"	m	struct:__anon11
+vcpu	libdft_api.h	/^	vcpu_ctx_t	    vcpu;		\/* VCPU context *\/$/;"	m	struct:__anon13
+vcpu_ctx_t	libdft_api.h	/^} vcpu_ctx_t;$/;"	t	typeref:struct:__anon6
+version	syscall_desc.h	/^	__u32 version;$/;"	m	struct:__user_cap_header_struct
+wopnd_mem	libdft_api.h	/^	UINT64 			wopnd_mem;$/;"	m	struct:__anon13
+write_array	libdft_api.cpp	/^static inline void write_array(FILE* pfile, ADDRINT root, ARRAY_SET_T* praw)$/;"	f	file:
+write_heap_array	libdft_api.cpp	/^void write_heap_array(heap_desc_t* pdesc, ADDRINT root, ARRAY_SET_T *praw)$/;"	f
+write_heap_taint	libdft_api.cpp	/^static void write_heap_taint(const std::string &fname, const std::string &fcstack)$/;"	f	file:
+write_stack_array	libdft_api.cpp	/^void write_stack_array(ADDRINT func_entry, ADDRINT root, ARRAY_SET_T *praw)$/;"	f
+write_stack_taint	libdft_api.cpp	/^static void write_stack_taint(const std::string &fpath)$/;"	f	file:
+
+
+filename	osutils.cpp
+fdset	osutils.cpp
