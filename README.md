@@ -3,7 +3,7 @@ VUzzer(64)
 
 About
 ------
-This VUzzer is basically a 64-bit version of the original VUzzer (https://github.com/vusec/vuzzer). We have made several changes to make it work on 64-bit. Main efforts are made by Vivek (githubID: vivek425ster, vivek425ster@gmail.com) to lift LibDFT to work on 64-bit. This part is still in testing/development phase (which means taint analysis may have bugs!). Functionality wise, this version of VUzzer is same as the original 32-bit VUzzer (with few bugs fixed!). 
+This VUzzer is basically a 64-bit version of the original VUzzer (https://github.com/vusec/vuzzer). We have made several changes to make it work on 64-bit. Main efforts are made by Vivek (githubID: vivek425ster) to lift LibDFT to work on 64-bit. This part is still in testing/development phase (which means taint analysis may have bugs!). Functionality wise, this version of VUzzer is same as the original 32-bit VUzzer (with few bugs fixed!). 
 
 Originally (in turn), this Project depends heavily on a  modified version of DataTracker, which in turn depends on LibDFT pintool. It has some extra tags added in libdft. DataTracker original repo https://github.com/m000/dtracker. The modified code is included with this distribution.
 
