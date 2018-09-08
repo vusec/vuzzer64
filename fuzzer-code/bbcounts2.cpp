@@ -145,13 +145,20 @@ VOID PIN_FAST_ANALYSIS_CALL rememberBlock(ADDRINT bbl)
 
 }
 
+//callback for stack hash
+VOID PIN_FAST_ANALYSIS_CALL crashBlock(ADDRINT bbl)
+{
+            LastExecutedBB[LastExecutedPosBB]= bbl;
+            LastExecutedPosBB = (LastExecutedPosBB+1)% LAST_EXECUTED_BB;
+
+}
+
 VOID Trace(TRACE trace, VOID *v)
 {
     for (BBL bbl = TRACE_BblHead(trace); BBL_Valid(bbl); bbl = BBL_Next(bbl))
     {
         /* Things related to stack hash/crash fingerprints */
-        LastExecutedBB[LastExecutedPosBB]= BBL_Address(bbl);
-        LastExecutedPosBB = (LastExecutedPosBB+1)% LAST_EXECUTED_BB;
+        BBL_InsertCall(bbl, IPOINT_ANYWHERE, AFUNPTR(crashBlock), IARG_FAST_ANALYSIS_CALL, IARG_ADDRINT, BBL_Address(bbl), IARG_END);
         INS tail = BBL_InsTail(bbl);
         if( INS_IsCall(tail) )
         {
