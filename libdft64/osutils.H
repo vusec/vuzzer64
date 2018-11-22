@@ -64,7 +64,7 @@ inline int path_exists(const std::string & path) {
 /// Any symbolic links in the path are resolved. If an error occurs,
 /// the respective error message is returned instead of the file path.
 /// Because the function uses a static buffer, the file path may be
-/// returned truncated ending with "...". 
+/// returned truncated ending with "...".
 ///
 ///	@param fd -- the file descriptor to be resolved.
 /// @return A string representing the full path to the file.
@@ -72,4 +72,3 @@ std::string fdname(int fd);
 #endif
 
 /* vim: set noet ts=4 sts=4 sw=4 ai : */
-

@@ -103,6 +103,40 @@ static void post_dup_hook(THREADID tid, syscall_ctx_t*);
 static void post_close_hook(THREADID tid, syscall_ctx_t*);
 static void post_pread64_hook(THREADID tid, syscall_ctx_t*);
 
+/* XXX: Latest Intel Pin (3.7) doesn't support pread64 and stat
+ * (See $PIN_ROOT/intel64/runtime/pincrt/libc-dynamic.so) */
+ssize_t pread64(int fd, void *buf, size_t nbyte, off64_t offset) {
+	/* Since we must not change the file pointer preserve the value so that
+     	we can restore it later.  */
+  	int save_errno;
+  	ssize_t result;
+  	off64_t old_offset = lseek64(fd, 0, SEEK_CUR);
+  	if (old_offset == (off64_t) -1)
+    		return -1;
+  	/* Set to wanted position.  */
+  	if (lseek(fd, offset, SEEK_SET) == (off64_t) -1)
+    		return -1;
+  	/* Write out the data.  */
+  	result = read(fd, buf, nbyte);
+	  /* Now we have to restore the position.  If this fails we have to
+	     return this as an error.  But if the writing also failed we
+	     return this error.  */
+  	save_errno = errno;
+  	if (lseek(fd, old_offset, SEEK_SET) == (off64_t) -1) {
+      		if (result == -1)
+        	errno = save_errno;
+      		return -1;
+    	}
+  	errno = save_errno;
+  	return result;
+}
+
+int stat(const char *name, struct stat *buf) {
+	int result;
+	result = syscall(__NR_stat, name, buf);
+	return result;
+}
+
 /* syscall descriptors */
 syscall_desc_t syscall_desc[SYSCALL_MAX] = {
 	/* __NR_read = 0 */

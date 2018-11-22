@@ -61,7 +61,7 @@ extern std::map<pair<int,int>, int> file_offsets;
 #define M128TAG(ADDR) \
 {MTAG(ADDR), MTAG(ADDR+1), MTAG(ADDR+2), MTAG(ADDR+3), MTAG(ADDR+4), MTAG(ADDR+5), MTAG(ADDR+6), MTAG(ADDR+7),  MTAG(ADDR+8),  MTAG(ADDR+9), MTAG(ADDR+10), MTAG(ADDR+11),  MTAG(ADDR+12),  MTAG(ADDR+13),  MTAG(ADDR+14), MTAG(ADDR+15)}
 
-/* XXX: Latest Intel Pin (3.7) doesn't support INT2STR() */
+/* XXX: Latest Intel Pin (3.7) doesn't support std::to_string */
 #define INT2STR( x ) static_cast< std::ostringstream & >( \
         ( std::ostringstream() << std::dec << x ) ).str()
 
