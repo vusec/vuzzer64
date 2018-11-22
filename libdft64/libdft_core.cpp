@@ -53,14 +53,17 @@ extern std::map<pair<int,int>, int> file_offsets;
 #define M8TAG(ADDR) \
 {tag_dir_getb(tag_dir, (ADDR))}
 #define M16TAG(ADDR) \
-{MTAG(ADDR), MTAG(ADDR+1)}      
+{MTAG(ADDR), MTAG(ADDR+1)}
 #define M32TAG(ADDR) \
-{MTAG(ADDR), MTAG(ADDR+1), MTAG(ADDR+2), MTAG(ADDR+3)}  
+{MTAG(ADDR), MTAG(ADDR+1), MTAG(ADDR+2), MTAG(ADDR+3)}
 #define M64TAG(ADDR) \
-{MTAG(ADDR), MTAG(ADDR+1), MTAG(ADDR+2), MTAG(ADDR+3), MTAG(ADDR+4), MTAG(ADDR+5), MTAG(ADDR+6), MTAG(ADDR+7)}  
+{MTAG(ADDR), MTAG(ADDR+1), MTAG(ADDR+2), MTAG(ADDR+3), MTAG(ADDR+4), MTAG(ADDR+5), MTAG(ADDR+6), MTAG(ADDR+7)}
 #define M128TAG(ADDR) \
-{MTAG(ADDR), MTAG(ADDR+1), MTAG(ADDR+2), MTAG(ADDR+3), MTAG(ADDR+4), MTAG(ADDR+5), MTAG(ADDR+6), MTAG(ADDR+7),  MTAG(ADDR+8),  MTAG(ADDR+9), MTAG(ADDR+10), MTAG(ADDR+11),  MTAG(ADDR+12),  MTAG(ADDR+13),  MTAG(ADDR+14), MTAG(ADDR+15)}  
+{MTAG(ADDR), MTAG(ADDR+1), MTAG(ADDR+2), MTAG(ADDR+3), MTAG(ADDR+4), MTAG(ADDR+5), MTAG(ADDR+6), MTAG(ADDR+7),  MTAG(ADDR+8),  MTAG(ADDR+9), MTAG(ADDR+10), MTAG(ADDR+11),  MTAG(ADDR+12),  MTAG(ADDR+13),  MTAG(ADDR+14), MTAG(ADDR+15)}
 
+/* XXX: Latest Intel Pin (3.7) doesn't support INT2STR() */
+#define INT2STR( x ) static_cast< std::ostringstream & >( \
+        ( std::ostringstream() << std::dec << x ) ).str()
 
 UINT32 get_reg_size(REG reg){
         if(REG_is_xmm(reg)){
@@ -322,13 +325,13 @@ void get_array_mem(ADDRINT addr, int size, std::vector<tag_t> &tag){
                                break;
                         }
                 default:
-                     
-return;                                                                                                                                                                                                                                                               
+
+return;
         }
 }
 
 
-void get_array_reg(THREADID tid, uint32_t reg, int size, std::vector<tag_t> &tag){                                                             
+void get_array_reg(THREADID tid, uint32_t reg, int size, std::vector<tag_t> &tag){
         switch (size){
                 case 1:{
                                tag_t temp[] = R8TAG(tid, reg);
@@ -449,7 +452,7 @@ _cwde(THREADID tid)
 /*
  * tag propagation (analysis function)
  *
- * propagate and extend tag between a 16-bit 
+ * propagate and extend tag between a 16-bit
  * register and an 8-bit register as t[dst] = t[upper(src)]
  *
  * NOTE: special case for MOVSX instruction
@@ -463,7 +466,7 @@ _movsx_r2r_opwb_u(THREADID tid, uint32_t dst, uint32_t src)
 {
 	/* temporary tag value */
     tag_t src_tag = threads_ctx[tid].vcpu.gpr_file[src][1];
-	
+
     /* update the destination (xfer) */
     threads_ctx[tid].vcpu.gpr_file[dst][0] = src_tag;
     threads_ctx[tid].vcpu.gpr_file[dst][1] = src_tag;
@@ -472,7 +475,7 @@ _movsx_r2r_opwb_u(THREADID tid, uint32_t dst, uint32_t src)
 /*
  * tag propagation (analysis function)
  *
- * propagate and extend tag between a 16-bit 
+ * propagate and extend tag between a 16-bit
  * register and an 8-bit register as t[dst] = t[lower(src)]
  *
  * NOTE: special case for MOVSX instruction
@@ -562,7 +565,7 @@ _movsx_r2r_opql(THREADID tid, uint32_t dst, uint32_t src)
 {
 	/* temporary tag values */
     tag_t src_tag[] = R32TAG(tid, src);
-	
+
 
     for (size_t i = 0; i < 8; i++)
 	    RTAG(tid)[dst][i] = src_tag[i%4];
@@ -575,7 +578,7 @@ _movsx_r2r_oplw(THREADID tid, uint32_t dst, uint32_t src)
 	/* temporary tag values */
     tag_t src_low_tag = threads_ctx[tid].vcpu.gpr_file[src][0];
     tag_t src_high_tag = threads_ctx[tid].vcpu.gpr_file[src][1];
-	
+
     /* update the destination (xfer) */
 	threads_ctx[tid].vcpu.gpr_file[dst][0] = src_low_tag;
 	threads_ctx[tid].vcpu.gpr_file[dst][1] = src_high_tag;
@@ -588,8 +591,8 @@ _movsx_m2r_opwb(THREADID tid, uint32_t dst, ADDRINT src)
 {
 	/* temporary tag value */
     tag_t src_tag[] = M8TAG(src);
-	
-    /* update the destination (xfer) */ 
+
+    /* update the destination (xfer) */
 	RTAG(tid)[dst][0] = src_tag[0];
 	RTAG(tid)[dst][1] = src_tag[0];
 }
@@ -599,7 +602,7 @@ _movsx_m2r_opqb(THREADID tid, uint32_t dst, ADDRINT src)
 {
 	/* temporary tag value */
     tag_t src_tag = tag_dir_getb(tag_dir, src);
-	
+
     /* update the destination (xfer) */
     for (size_t i = 0; i < 8; i++)
 	    RTAG(tid)[dst][i] = src_tag;
@@ -611,7 +614,7 @@ _movsx_m2r_oplb(THREADID tid, uint32_t dst, ADDRINT src)
 {
 	/* temporary tag value */
     tag_t src_tag = tag_dir_getb(tag_dir, src);
-	
+
     /* update the destination (xfer) */
     for (size_t i = 0; i < 4; i++)
 	    RTAG(tid)[dst][i] = src_tag;
@@ -622,7 +625,7 @@ _movsx_m2r_opqw(THREADID tid, uint32_t dst, ADDRINT src)
 {
 	/* temporary tag value */
     tag_t src_tags[] = M16TAG(src);
-	
+
     /* update the destination (xfer) */
     for (size_t i = 0; i < 8; i++)
 	    RTAG(tid)[dst][i] = src_tags[i%2];
@@ -646,7 +649,7 @@ _movsx_m2r_oplw(THREADID tid, uint32_t dst, ADDRINT src)
 {
 	/* temporary tag value */
     tag_t src_tags[] = M16TAG(src);
-	
+
     /* update the destination (xfer) */
     for (size_t i = 0; i < 4; i++)
 	    RTAG(tid)[dst][i] = src_tags[i%2];
@@ -655,7 +658,7 @@ _movsx_m2r_oplw(THREADID tid, uint32_t dst, ADDRINT src)
 /*
  * tag propagation (analysis function)
  *
- * propagate and extend tag between a 16-bit 
+ * propagate and extend tag between a 16-bit
  * register and an 8-bit register as t[dst] = t[upper(src)]
  *
  * NOTE: special case for MOVZX instruction
@@ -669,7 +672,7 @@ _movzx_r2r_opwb_u(THREADID tid, uint32_t dst, uint32_t src)
 {
 	/* temporary tag value */
     tag_t src_tag = threads_ctx[tid].vcpu.gpr_file[src][1];
-	
+
     /* update the destination (xfer) */
 	threads_ctx[tid].vcpu.gpr_file[dst][0] = src_tag;
 	threads_ctx[tid].vcpu.gpr_file[dst][1] = src_tag;
@@ -678,7 +681,7 @@ _movzx_r2r_opwb_u(THREADID tid, uint32_t dst, uint32_t src)
 /*
  * tag propagation (analysis function)
  *
- * propagate and extend tag between a 16-bit 
+ * propagate and extend tag between a 16-bit
  * register and an 8-bit register as t[dst] = t[lower(src)]
  *
  * NOTE: special case for MOVZX instruction
@@ -692,7 +695,7 @@ _movzx_r2r_opwb_l(THREADID tid, uint32_t dst, uint32_t src)
 {
 	/* temporary tag value */
     tag_t src_tag = threads_ctx[tid].vcpu.gpr_file[src][0];
-	
+
     /* update the destination (xfer) */
 	threads_ctx[tid].vcpu.gpr_file[dst][0] = src_tag;
 	threads_ctx[tid].vcpu.gpr_file[dst][1] = src_tag;
@@ -702,7 +705,7 @@ static void PIN_FAST_ANALYSIS_CALL
 _movzx_r2r_opqb_u(THREADID tid, uint32_t dst, uint32_t src)
 {
     tag_t src_tag = threads_ctx[tid].vcpu.gpr_file[src][1];
-	
+
     /* update the destination (xfer) */
 	threads_ctx[tid].vcpu.gpr_file[dst][0] = src_tag;
 	threads_ctx[tid].vcpu.gpr_file[dst][1] = src_tag;
@@ -713,7 +716,7 @@ static void PIN_FAST_ANALYSIS_CALL
 _movzx_r2r_oplb_u(THREADID tid, uint32_t dst, uint32_t src)
 {
     tag_t src_tag = threads_ctx[tid].vcpu.gpr_file[src][1];
-	
+
     /* update the destination (xfer) */
 	threads_ctx[tid].vcpu.gpr_file[dst][0] = src_tag;
 	threads_ctx[tid].vcpu.gpr_file[dst][1] = src_tag;
@@ -724,7 +727,7 @@ _movzx_r2r_opqb_l(THREADID tid, uint32_t dst, uint32_t src)
 {
 	/* temporary tag value */
     tag_t src_tag = threads_ctx[tid].vcpu.gpr_file[src][0];
-	
+
     /* update the destination (xfer) */
     for (size_t i = 0; i < 8; i++)
 	    threads_ctx[tid].vcpu.gpr_file[dst][i] = src_tag;
@@ -736,7 +739,7 @@ _movzx_r2r_oplb_l(THREADID tid, uint32_t dst, uint32_t src)
 {
 	/* temporary tag value */
     tag_t src_tag = threads_ctx[tid].vcpu.gpr_file[src][0];
-	
+
     /* update the destination (xfer) */
     for (size_t i = 0; i < 4; i++)
 	    threads_ctx[tid].vcpu.gpr_file[dst][i] = src_tag;
@@ -768,7 +771,7 @@ _movzx_r2r_oplw(THREADID tid, uint32_t dst, uint32_t src)
 /*
  * tag propagation (analysis function)
  *
- * propagate and extend tag between a 16-bit 
+ * propagate and extend tag between a 16-bit
  * register and an 8-bit memory location as
  * t[dst] = t[src]
  *
@@ -783,7 +786,7 @@ _movzx_m2r_opwb(THREADID tid, uint32_t dst, ADDRINT src)
 {
 	/* temporary tag value */
     tag_t src_tag = M8TAG(src);
-	/* update the destination (xfer) */ 
+	/* update the destination (xfer) */
 	threads_ctx[tid].vcpu.gpr_file[dst][0] = src_tag;
 	threads_ctx[tid].vcpu.gpr_file[dst][1] = src_tag;
 }
@@ -793,7 +796,7 @@ _movzx_m2r_opqb(THREADID tid, uint32_t dst, ADDRINT src)
 {
 	/* temporary tag value */
 	tag_t src_tag = tag_dir_getb(tag_dir, src);
-	//LOG("movzx byte " + tag_sprint(src_tag) + " " + StringFromAddrint(src) + " " + decstr(dst) + "\n");	
+	//LOG("movzx byte " + tag_sprint(src_tag) + " " + StringFromAddrint(src) + " " + decstr(dst) + "\n");
 	/* update the destination (xfer) */
     for (size_t i = 0; i < 8; i++)
 	    threads_ctx[tid].vcpu.gpr_file[dst][i] = src_tag;
@@ -805,7 +808,7 @@ _movzx_m2r_oplb(THREADID tid, uint32_t dst, ADDRINT src)
 {
 	/* temporary tag value */
 	tag_t src_tag = tag_dir_getb(tag_dir, src);
-	//LOG("movzx byte " + tag_sprint(src_tag) + " " + StringFromAddrint(src) + " " + decstr(dst) + "\n");	
+	//LOG("movzx byte " + tag_sprint(src_tag) + " " + StringFromAddrint(src) + " " + decstr(dst) + "\n");
 	/* update the destination (xfer) */
     for (size_t i = 0; i < 4; i++)
 	    threads_ctx[tid].vcpu.gpr_file[dst][i] = src_tag;
@@ -880,7 +883,7 @@ _cmpxchg_r2r_opq_slow(THREADID tid, uint32_t dst, uint32_t src)
 	/* restore the tag value from the scratch register */
     tag_t saved_tags[] = {threads_ctx[tid].vcpu.gpr_file[DFT_REG_HELPER1][0], threads_ctx[tid].vcpu.gpr_file[DFT_REG_HELPER1][1],
                             threads_ctx[tid].vcpu.gpr_file[DFT_REG_HELPER1][2], threads_ctx[tid].vcpu.gpr_file[DFT_REG_HELPER1][3],
-			  threads_ctx[tid].vcpu.gpr_file[DFT_REG_HELPER1][4], threads_ctx[tid].vcpu.gpr_file[DFT_REG_HELPER1][5], 
+			  threads_ctx[tid].vcpu.gpr_file[DFT_REG_HELPER1][4], threads_ctx[tid].vcpu.gpr_file[DFT_REG_HELPER1][5],
 			 threads_ctx[tid].vcpu.gpr_file[DFT_REG_HELPER1][6], threads_ctx[tid].vcpu.gpr_file[DFT_REG_HELPER1][7]};
     for (size_t i = 0; i < 8; i++)
         threads_ctx[tid].vcpu.gpr_file[DFT_REG_RAX][i] = saved_tags[i];
@@ -1032,7 +1035,7 @@ _cmpxchg_m2r_opw_fast(THREADID tid, uint16_t dst_val, ADDRINT src)
     for (size_t i = 0; i < 2; i++){
         threads_ctx[tid].vcpu.gpr_file[DFT_REG_RAX][i] = src_tags[i];
     }
-	
+
 	/* compare the dst and src values; the original values the tag bits */
 	return (dst_val == *(uint16_t *)src);
 }
@@ -1111,7 +1114,7 @@ static void PIN_FAST_ANALYSIS_CALL
 _xchg_r2r_opw(THREADID tid, uint32_t dst, uint32_t src)
 {
     tag_t dst_tag[] = R16TAG(tid, dst);
-    
+
     tag_t src_tag[] = R16TAG(tid, src);
 
 	/* swap */
@@ -1126,7 +1129,7 @@ _xchg_m2r_opb_u(THREADID tid, uint32_t dst, ADDRINT src)
 {
 	/* temporary tag value */
     tag_t tmp_tag = RTAG(tid)[dst][1];
-    
+
     tag_t src_tag = M8TAG(src);
 
 	/* swap */
@@ -1138,7 +1141,7 @@ _xchg_m2r_opb_l(THREADID tid, uint32_t dst, ADDRINT src)
 {
 	/* temporary tag value */
     tag_t tmp_tag = RTAG(tid)[dst][0];
-    
+
     tag_t src_tag = M8TAG(src);
 
 	/* swap */
@@ -1151,7 +1154,7 @@ _xchg_m2r_opw(THREADID tid, uint32_t dst, ADDRINT src)
 {
 	/* temporary tag value */
     tag_t tmp_tag[] = R16TAG(tid, dst);
-    
+
     tag_t src_tag[] = M16TAG(src);
 
 	/* swap */
@@ -1464,14 +1467,14 @@ r2r_ternary_opw(THREADID tid, uint32_t src)
 
     RTAG(tid)[DFT_REG_RDX][0] = tag_combine(dst1_tag[0], tmp_tag[0]);
     RTAG(tid)[DFT_REG_RDX][1] = tag_combine(dst1_tag[1], tmp_tag[1]);
-    
+
     RTAG(tid)[DFT_REG_RAX][0] = tag_combine(dst2_tag[0], tmp_tag[0]);
     RTAG(tid)[DFT_REG_RAX][1] = tag_combine(dst2_tag[1], tmp_tag[1]);
 }
 
 static void PIN_FAST_ANALYSIS_CALL
 r2r_ternary_opq(THREADID tid, uint32_t src)
-{ 
+{
     tag_t tmp_tag[] = R64TAG(tid, src);
     tag_t dst1_tag[] = R64TAG(tid, DFT_REG_RDX);
     tag_t dst2_tag[] = R64TAG(tid, DFT_REG_RAX);
@@ -1486,7 +1489,7 @@ r2r_ternary_opq(THREADID tid, uint32_t src)
 
 static void PIN_FAST_ANALYSIS_CALL
 r2r_ternary_opl(THREADID tid, uint32_t src)
-{ 
+{
     tag_t tmp_tag[] = R32TAG(tid, src);
     tag_t dst1_tag[] = R32TAG(tid, DFT_REG_RDX);
     tag_t dst2_tag[] = R32TAG(tid, DFT_REG_RAX);
@@ -1773,7 +1776,7 @@ r2m_binary_opq(THREADID tid, ADDRINT dst, uint32_t src)
     tag_t src_tag[] = R64TAG(tid, src);
     tag_t dst_tag[] = M64TAG(dst);
 
-    tag_t res_tag[] = {tag_combine(dst_tag[0], src_tag[0]), tag_combine(dst_tag[1], src_tag[1]), 
+    tag_t res_tag[] = {tag_combine(dst_tag[0], src_tag[0]), tag_combine(dst_tag[1], src_tag[1]),
         tag_combine(dst_tag[2], src_tag[2]), tag_combine(dst_tag[3], src_tag[3]), tag_combine(dst_tag[4], src_tag[4]), tag_combine(dst_tag[5], src_tag[5]), tag_combine(dst_tag[6], src_tag[6]), tag_combine(dst_tag[7], src_tag[7])};
 
     tag_dir_setb(tag_dir, dst, res_tag[0]);
@@ -1792,7 +1795,7 @@ r2m_binary_opl(THREADID tid, ADDRINT dst, uint32_t src)
     tag_t src_tag[] = R32TAG(tid, src);
     tag_t dst_tag[] = M32TAG(dst);
 
-    tag_t res_tag[] = {tag_combine(dst_tag[0], src_tag[0]), tag_combine(dst_tag[1], src_tag[1]), 
+    tag_t res_tag[] = {tag_combine(dst_tag[0], src_tag[0]), tag_combine(dst_tag[1], src_tag[1]),
         tag_combine(dst_tag[2], src_tag[2]), tag_combine(dst_tag[3], src_tag[3])};
 
     tag_dir_setb(tag_dir, dst, res_tag[0]);
@@ -1917,7 +1920,7 @@ static void PIN_FAST_ANALYSIS_CALL
 r2r_lea_idx_xfer_opw(ADDRINT ins_address, THREADID tid, uint32_t dst, uint32_t src)
 {
      tag_t src_tag[] = R16TAG(tid, src);
-   
+
     for(size_t i = 0 ;i<10;i++){
       output_lea[i] = "{}";
     }
@@ -1936,7 +1939,7 @@ r2r_lea_idx_xfer_opw(ADDRINT ins_address, THREADID tid, uint32_t dst, uint32_t s
     if(fl == 1){
         print_lea_log();
     }
- 
+
 
      RTAG(tid)[dst][0] = src_tag[0];
      RTAG(tid)[dst][1] = src_tag[1];
@@ -1946,7 +1949,7 @@ static void PIN_FAST_ANALYSIS_CALL
 r2r_lea_base_xfer_opw(ADDRINT ins_address, THREADID tid, uint32_t dst, uint32_t src)
 {
      tag_t src_tag[] = R16TAG(tid, src);
-   
+
 
      RTAG(tid)[dst][0] = src_tag[0];
      RTAG(tid)[dst][1] = src_tag[1];
@@ -2063,7 +2066,7 @@ r2r_lea_idx_xfer_opl(ADDRINT ins_address, THREADID tid, uint32_t dst, uint32_t s
         print_lea_log();
     }
 
- 
+
      RTAG(tid)[dst][0] = src_tag[0];
      RTAG(tid)[dst][1] = src_tag[1];
      RTAG(tid)[dst][2] = src_tag[2];
@@ -2075,7 +2078,7 @@ r2r_lea_base_xfer_opq(ADDRINT ins_address, THREADID tid, uint32_t dst, uint32_t 
 {
      tag_t src_tag[] = R64TAG(tid, src);
 
- 
+
      RTAG(tid)[dst][0] = src_tag[0];
      RTAG(tid)[dst][1] = src_tag[1];
      RTAG(tid)[dst][2] = src_tag[2];
@@ -2092,7 +2095,7 @@ r2r_lea_base_xfer_opl(ADDRINT ins_address, THREADID tid, uint32_t dst, uint32_t 
 {
      tag_t src_tag[] = R32TAG(tid, src);
 
- 
+
      RTAG(tid)[dst][0] = src_tag[0];
      RTAG(tid)[dst][1] = src_tag[1];
      RTAG(tid)[dst][2] = src_tag[2];
@@ -2161,7 +2164,7 @@ m2r_xfer_opl(THREADID tid, uint32_t dst, ADDRINT src)
 }
 
 static void PIN_FAST_ANALYSIS_CALL
-r2m_xfer_opbn(THREADID tid, ADDRINT dst, ADDRINT count, 
+r2m_xfer_opbn(THREADID tid, ADDRINT dst, ADDRINT count,
         ADDRINT eflags)
 {
     tag_t src_tag = RTAG(tid)[DFT_REG_RAX][0];
@@ -2372,7 +2375,7 @@ static ADDRINT PIN_FAST_ANALYSIS_CALL
 rep_predicate(BOOL first_iteration)
 {
 	/* return the flag; typically this is true only once */
-	return first_iteration; 
+	return first_iteration;
 }
 
 static void PIN_FAST_ANALYSIS_CALL
@@ -2484,7 +2487,7 @@ file_cmp_r2r(THREADID tid, ADDRINT ins_address, uint32_t reg_dest, uint64_t reg_
 				break;
 		}
 
-		output[0] = std::to_string(size_dest*8);
+		output[0] = INT2STR(size_dest*8);
 		output[1] = "reg reg";
 		print_log();
 	}
@@ -2536,7 +2539,7 @@ file_cmp_m2r(THREADID tid, ADDRINT ins_address, uint32_t reg_dest, uint64_t reg_
 				output[20] = hexstr(*(uint8_t *)src_addr);
 				break;
 		}
-		output[0] = std::to_string(size_dest*8);
+		output[0] = INT2STR(size_dest*8);
 		output[1] = "reg mem";
 		print_log();
 	}
@@ -2576,8 +2579,8 @@ file_cmp_i2r(THREADID tid, ADDRINT ins_address, uint32_t reg_dest, uint64_t reg_
 				output[19] = hexstr((uint8_t)reg_dest_val);
 				output[20] = hexstr((uint8_t)imm_src_val);
 				break;
-		}	
-		output[0] = std::to_string(size_dest*8);
+		}
+		output[0] = INT2STR(size_dest*8);
 		output[1] = "reg imm";
 		print_log();
 	}
@@ -2632,7 +2635,7 @@ file_cmp_r2m(THREADID tid, ADDRINT ins_address, ADDRINT dest_addr, uint32_t reg_
 				output[20] = hexstr((uint8_t)reg_src_val);
 				break;
 		}
-		output[0] = std::to_string(size_dest*8);
+		output[0] = INT2STR(size_dest*8);
 		output[1] = "mem reg";
 		print_log();
 	}
@@ -2697,7 +2700,7 @@ file_cmp_m2m(ADDRINT ins_address, ADDRINT dest_addr, ADDRINT src_addr, uint32_t 
                                 break;
                 }
 
-		output[0] = std::to_string(size_dest*8);
+		output[0] = INT2STR(size_dest*8);
 		output[1] = "mem mem";
              //   LOG("\n");
 		print_log();
@@ -2740,7 +2743,7 @@ file_cmp_i2m(ADDRINT ins_address, ADDRINT dest_addr, uint32_t imm_src_val, uint3
 				break;
 		}
 		output[20] = hexstr(imm_src_val);
-		output[0] = std::to_string(size_dest*8);
+		output[0] = INT2STR(size_dest*8);
 		output[1] = "mem imm";
 		print_log();
 	}
@@ -2748,12 +2751,12 @@ file_cmp_i2m(ADDRINT ins_address, ADDRINT dest_addr, uint32_t imm_src_val, uint3
 
 
 
-   /* 
+   /*
 static void PIN_FAST_ANALYSIS_CALL
 cal(THREADID tid,ADDRINT ins_address, char *str, uint64_t rsp_val){
-   
+
     std::string s(str);
-    LOG(s + " " + StringFromAddrint(ins_address) + " " + hexstr(rsp_val) + "\n"); 
+    LOG(s + " " + StringFromAddrint(ins_address) + " " + hexstr(rsp_val) + "\n");
     std::vector<tag_t> dest_tag(8);
     get_array_reg(tid, 3, 8, dest_tag);
     for(int i=0;i<2;i++){
@@ -2812,7 +2815,7 @@ cal(THREADID tid,ADDRINT ins_address, char *str, uint64_t rsp_val){
 void
 ins_inspect(INS ins)
 {
-	/* 
+	/*
 	 * temporaries;
 	 * source, destination, base, and index registers
 	 */
@@ -2821,7 +2824,7 @@ ins_inspect(INS ins)
 	/* use XED to decode the instruction and extract its opcode */
 	xed_iclass_enum_t ins_indx = (xed_iclass_enum_t)INS_Opcode(ins);
 	/* sanity check */
-	if (unlikely(ins_indx <= XED_ICLASS_INVALID || 
+	if (unlikely(ins_indx <= XED_ICLASS_INVALID ||
 				ins_indx >= XED_ICLASS_LAST)) {
 		LOG(string(__func__) + ": unknown opcode (opcode=" +
 				decstr(ins_indx) + ")\n");
@@ -2864,7 +2867,7 @@ ins_inspect(INS ins)
 						case XED_ICLASS_XOR:
 						case XED_ICLASS_SUB:
 						case XED_ICLASS_SBB:
-							if (reg_dst == reg_src) 
+							if (reg_dst == reg_src)
 							{
 							INS_InsertCall(ins,
 								IPOINT_BEFORE,
@@ -2891,7 +2894,7 @@ ins_inspect(INS ins)
 						case XED_ICLASS_XOR:
 						case XED_ICLASS_SUB:
 						case XED_ICLASS_SBB:
-							if (reg_dst == reg_src) 
+							if (reg_dst == reg_src)
 							{
 							INS_InsertCall(ins,
 								IPOINT_BEFORE,
@@ -2918,7 +2921,7 @@ ins_inspect(INS ins)
 						case XED_ICLASS_XOR:
 						case XED_ICLASS_SUB:
 						case XED_ICLASS_SBB:
-							if (reg_dst == reg_src) 
+							if (reg_dst == reg_src)
 							{
 							INS_InsertCall(ins,
 								IPOINT_BEFORE,
@@ -2945,7 +2948,7 @@ ins_inspect(INS ins)
 						case XED_ICLASS_XOR:
 						case XED_ICLASS_SUB:
 						case XED_ICLASS_SBB:
-							if (reg_dst == reg_src) 
+							if (reg_dst == reg_src)
 							{
 						if (REG_is_Upper8(reg_dst))
 							INS_InsertCall(ins,
@@ -2955,7 +2958,7 @@ ins_inspect(INS ins)
 								IARG_THREAD_ID,
 								IARG_UINT32, REG_INDX(reg_dst),
 								IARG_END);
-						else 
+						else
 							INS_InsertCall(ins,
 								IPOINT_BEFORE,
 								(AFUNPTR)r_clrb_l,
@@ -3045,7 +3048,7 @@ ins_inspect(INS ins)
 						IARG_UINT32, REG_INDX(reg_dst),
 						IARG_MEMORYREAD_EA,
 						IARG_END);
-				else 
+				else
 					INS_InsertCall(ins,
 						IPOINT_BEFORE,
 						(AFUNPTR)m2r_binary_opb_l,
@@ -3304,7 +3307,7 @@ ins_inspect(INS ins)
 						IARG_UINT32, REG_INDX(reg_dst),
 						IARG_MEMORYREAD_EA,
 						IARG_END);
-				else if (REG_is_Upper8(reg_dst)) 
+				else if (REG_is_Upper8(reg_dst))
 					INS_InsertCall(ins,
 						IPOINT_BEFORE,
 						(AFUNPTR)m2r_xfer_opb_u,
@@ -3362,7 +3365,7 @@ ins_inspect(INS ins)
 						IARG_MEMORYWRITE_EA,
 						IARG_UINT32, REG_INDX(reg_src),
 						IARG_END);
-				else 
+				else
 					INS_InsertCall(ins,
 						IPOINT_BEFORE,
 						(AFUNPTR)r2m_xfer_opb_l,
@@ -3412,7 +3415,7 @@ ins_inspect(INS ins)
 						IARG_UINT32, REG_INDX(reg_dst),
 						IARG_UINT32, REG_INDX(reg_src),
 						IARG_END);
-				else 
+				else
 					INS_InsertPredicatedCall(ins,
 						IPOINT_BEFORE,
 						(AFUNPTR)r2r_xfer_opw,
@@ -3685,7 +3688,7 @@ ins_inspect(INS ins)
 			if (INS_MemoryOperandCount(ins) == 0) {
 				reg_dst = INS_OperandReg(ins, OP_0);
 				reg_src = INS_OperandReg(ins, OP_1);
-				
+
 				if (REG_is_gr16(reg_dst)) {
 					if (REG_is_Upper8(reg_src))
 					INS_InsertCall(ins,
@@ -3769,7 +3772,7 @@ ins_inspect(INS ins)
 			}
 			else {
 				reg_dst = INS_OperandReg(ins, OP_0);
-				
+
 				if (REG_is_gr16(reg_dst))
 					INS_InsertCall(ins,
 						IPOINT_BEFORE,
@@ -3900,7 +3903,7 @@ ins_inspect(INS ins)
 						IARG_THREAD_ID,
 						IARG_UINT32, REG_INDX(reg_src),
 						IARG_END);
-				else 
+				else
 					INS_InsertCall(ins,
 						IPOINT_BEFORE,
 						(AFUNPTR)r2r_ternary_opb_l,
@@ -4004,7 +4007,7 @@ ins_inspect(INS ins)
 				if (INS_MemoryOperandCount(ins) == 0) {
 					reg_dst = INS_OperandReg(ins, OP_0);
 					reg_src = INS_OperandReg(ins, OP_1);
-				
+
 					if (REG_is_gr32(reg_dst))
 						INS_InsertCall(ins,
 							IPOINT_BEFORE,
@@ -4075,8 +4078,8 @@ ins_inspect(INS ins)
 		case XED_ICLASS_SETZ:
 			if (INS_MemoryOperandCount(ins) == 0) {
 				reg_dst = INS_OperandReg(ins, OP_0);
-				
-				if (REG_is_Upper8(reg_dst))	
+
+				if (REG_is_Upper8(reg_dst))
 					INS_InsertPredicatedCall(ins,
 							IPOINT_BEFORE,
 						(AFUNPTR)r_clrb_u,
@@ -4084,7 +4087,7 @@ ins_inspect(INS ins)
 						IARG_THREAD_ID,
 						IARG_UINT32, REG_INDX(reg_dst),
 						IARG_END);
-				else 
+				else
 					INS_InsertPredicatedCall(ins,
 							IPOINT_BEFORE,
 						(AFUNPTR)r_clrb_l,
@@ -4112,14 +4115,14 @@ ins_inspect(INS ins)
 				IARG_MEMORYWRITE_EA,
 				IARG_UINT32, 4,
 				IARG_END);
-		
+
 			/* done */
 			break;
 		case XED_ICLASS_SMSW:
 		case XED_ICLASS_STR:
 			if (INS_MemoryOperandCount(ins) == 0) {
 				reg_dst = INS_OperandReg(ins, OP_0);
-				
+
 				if (REG_is_gr16(reg_dst))
 					INS_InsertCall(ins,
 						IPOINT_BEFORE,
@@ -4414,7 +4417,7 @@ ins_inspect(INS ins)
 							IARG_END);
 					}
 				}
-			break;	
+			break;
 		}
                 case XED_ICLASS_CMPSB:{
 //                      	LOG(INS_Disassemble(ins) + "\n");
@@ -4780,7 +4783,7 @@ ins_inspect(INS ins)
 						IARG_UINT32, REG_INDX(reg_src),
 						IARG_END);
 					else if (REG_is_Lower8(reg_dst))
-						
+
 					INS_InsertCall(ins,
 						IPOINT_BEFORE,
 						(AFUNPTR)_xadd_r2r_opb_lu,
@@ -4923,7 +4926,7 @@ ins_inspect(INS ins)
 					IARG_REG_VALUE, INS_OperandReg(ins, OP_4),
 					IARG_END);
 			}
-			else 
+			else
 				INS_InsertCall(ins,
 					IPOINT_BEFORE,
 					(AFUNPTR)r2m_xfer_opb_l,
@@ -5465,7 +5468,7 @@ ins_inspect(INS ins)
 			reg_base	= INS_MemoryBaseReg(ins);
 			reg_indx	= INS_MemoryIndexReg(ins);
 			reg_dst		= INS_OperandReg(ins, OP_0);
-			
+
 			if (reg_base == REG_INVALID() &&
 					reg_indx == REG_INVALID()) {
 				if (REG_is_gr64(reg_dst))
@@ -5484,7 +5487,7 @@ ins_inspect(INS ins)
 						IARG_THREAD_ID,
 						IARG_UINT32, REG_INDX(reg_dst),
 						IARG_END);
-				else 
+				else
 					INS_InsertCall(ins,
 						IPOINT_BEFORE,
 						(AFUNPTR)r_clrw,
@@ -5515,7 +5518,7 @@ ins_inspect(INS ins)
 						IARG_UINT32, REG_INDX(reg_dst),
 						IARG_UINT32, REG_INDX(reg_base),
 						IARG_END);
-				else 
+				else
 					INS_InsertCall(ins,
 						IPOINT_BEFORE,
 						(AFUNPTR)r2r_lea_base_xfer_opw,
@@ -5594,14 +5597,14 @@ ins_inspect(INS ins)
 						IARG_UINT32, REG_INDX(reg_base),
 						IARG_UINT32, REG_INDX(reg_indx),
 						IARG_END);
-			}			
+			}
 			break;
 		case XED_ICLASS_MOVAPS:
 		case XED_ICLASS_MOVDQA:
 		case XED_ICLASS_MOVDQU:
-			if (INS_MemoryOperandCount(ins) == 0) { 
+			if (INS_MemoryOperandCount(ins) == 0) {
 				reg_dst = INS_OperandReg(ins, OP_0);
-				reg_src = INS_OperandReg(ins, OP_1); 
+				reg_src = INS_OperandReg(ins, OP_1);
 				INS_InsertCall(ins,
 					IPOINT_BEFORE,
 					(AFUNPTR)r2r_xfer_opx,
@@ -5609,9 +5612,9 @@ ins_inspect(INS ins)
 					IARG_THREAD_ID,
 					IARG_UINT32, REG_INDX(reg_dst),
 					IARG_UINT32, REG_INDX(reg_dst),
-					IARG_END);				
+					IARG_END);
 			}else if(INS_OperandIsReg(ins, OP_0)){
-				reg_dst = INS_OperandReg(ins, OP_0); 
+				reg_dst = INS_OperandReg(ins, OP_0);
 				INS_InsertCall(ins,
 					IPOINT_BEFORE,
 					(AFUNPTR)m2r_xfer_opx,
@@ -5621,7 +5624,7 @@ ins_inspect(INS ins)
 					IARG_MEMORYREAD_EA,
 					IARG_END);
 			}else{
-				reg_src = INS_OperandReg(ins, OP_1); 
+				reg_src = INS_OperandReg(ins, OP_1);
 				INS_InsertCall(ins,
 					IPOINT_BEFORE,
 					(AFUNPTR)r2m_xfer_opx,
@@ -5634,9 +5637,9 @@ ins_inspect(INS ins)
 			break;
 		case XED_ICLASS_MOVD:
 		case XED_ICLASS_MOVQ:
-			if (INS_MemoryOperandCount(ins) == 0) { 
+			if (INS_MemoryOperandCount(ins) == 0) {
 				reg_dst = INS_OperandReg(ins, OP_0);
-				reg_src = INS_OperandReg(ins, OP_1); 
+				reg_src = INS_OperandReg(ins, OP_1);
 				if(REG_is_xmm(reg_dst)){
 					if(REG_is_gr64(reg_src))
 						INS_InsertCall(ins,
@@ -5675,10 +5678,10 @@ ins_inspect(INS ins)
 							IARG_UINT32, REG_INDX(reg_dst),
 							IARG_UINT32, REG_INDX(reg_dst),
 							IARG_END);
-				}		
+				}
 			}
 			else if(INS_OperandIsReg(ins, OP_0)){
-				reg_dst = INS_OperandReg(ins, OP_0); 
+				reg_dst = INS_OperandReg(ins, OP_0);
 				if (INS_MemoryReadSize(ins) == BIT2BYTE(MEM_64BIT_LEN))
 					INS_InsertCall(ins,
 						IPOINT_BEFORE,
@@ -5698,7 +5701,7 @@ ins_inspect(INS ins)
 						IARG_MEMORYREAD_EA,
 						IARG_END);
 			}else{
-				reg_src = INS_OperandReg(ins, OP_1); 
+				reg_src = INS_OperandReg(ins, OP_1);
 				if (INS_MemoryReadSize(ins) == BIT2BYTE(MEM_64BIT_LEN))
 					INS_InsertCall(ins,
 						IPOINT_BEFORE,
@@ -5731,9 +5734,9 @@ ins_inspect(INS ins)
 					IARG_MEMORYWRITE_EA,
 					IARG_UINT32, REG_INDX(reg_src),
 					IARG_END);
-				
+
 			}else{
-				reg_dst = INS_OperandReg(ins, OP_0); 
+				reg_dst = INS_OperandReg(ins, OP_0);
 				INS_InsertCall(ins,
 					IPOINT_BEFORE,
 					(AFUNPTR)m2r_xfer_opq,
@@ -5756,9 +5759,9 @@ ins_inspect(INS ins)
 					IARG_MEMORYWRITE_EA,
 					IARG_UINT32, REG_INDX(reg_src),
 					IARG_END);
-				
+
 			}else{
-				reg_dst = INS_OperandReg(ins, OP_0); 
+				reg_dst = INS_OperandReg(ins, OP_0);
 				INS_InsertCall(ins,
 					IPOINT_BEFORE,
 					(AFUNPTR)m2r_xfer_opq_h,
@@ -5787,7 +5790,7 @@ ins_inspect(INS ins)
 						case XED_ICLASS_PSUBW:
 						case XED_ICLASS_PSUBD:
 						case XED_ICLASS_SBB:
-							if (reg_dst == reg_src) 
+							if (reg_dst == reg_src)
 							{
 							INS_InsertCall(ins,
 								IPOINT_BEFORE,
@@ -5815,7 +5818,7 @@ ins_inspect(INS ins)
 						case XED_ICLASS_PSUBW:
 						case XED_ICLASS_PSUBD:
 						case XED_ICLASS_SBB:
-							if (reg_dst == reg_src) 
+							if (reg_dst == reg_src)
 							{
 							INS_InsertCall(ins,
 								IPOINT_BEFORE,
@@ -5873,4 +5876,3 @@ ins_inspect(INS ins)
 			break;
 	}
 }
-

@@ -159,7 +159,7 @@ typedef struct {
 	tag_table_t* table[TOP_DIR_SZ];
 } tag_dir_t;
 template<typename T> struct tag_traits {};
-template<typename T> T tag_combine(T const & lhs, T const & rhs);
+template<typename T> T tag_combine(T & lhs, T & rhs);
 template<typename T> std::string tag_sprint(T const & tag);
 template<typename T> bool tag_count(T const & tag);
 
@@ -174,7 +174,7 @@ struct tag_traits<EWAHBoolArray<uint32_t>>
         static const EWAHBoolArray<uint32_t> set_val;
 };
 template<>
-EWAHBoolArray<uint32_t> tag_combine(EWAHBoolArray<uint32_t> const & lhs, EWAHBoolArray<uint32_t> const & rhs);
+EWAHBoolArray<uint32_t> tag_combine(EWAHBoolArray<uint32_t> & lhs, EWAHBoolArray<uint32_t> & rhs);
 template<>
 std::string tag_sprint(EWAHBoolArray<uint32_t> const & tag);
 template<>

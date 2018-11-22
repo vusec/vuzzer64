@@ -62,7 +62,7 @@ const EWAHBoolArray<uint32_t> tag_traits<EWAHBoolArray<uint32_t>>::cleared_val =
 const EWAHBoolArray<uint32_t> tag_traits<EWAHBoolArray<uint32_t>>::set_val = EWAHBoolArray<uint32_t>{};
 
 template<>
-EWAHBoolArray<uint32_t> tag_combine(EWAHBoolArray<uint32_t> const & lhs, EWAHBoolArray<uint32_t> const & rhs) {
+EWAHBoolArray<uint32_t> tag_combine(EWAHBoolArray<uint32_t> & lhs, EWAHBoolArray<uint32_t> & rhs) {
 	EWAHBoolArray<uint32_t> result;
 	lhs.logicalor(rhs, result);
 	return result;
