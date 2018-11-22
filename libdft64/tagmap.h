@@ -34,6 +34,7 @@
 #define __TAGMAP_H__
 
 #include "pin.H"
+#include <utility>
 #include <ewah.h>
 #include <map>
 
@@ -91,7 +92,7 @@ typedef struct {
 		UINT8     size;
 		UINT8	  loop_access_size;
 		BOOL      isPointer;
-		ADDRINT   base_addr; 
+		ADDRINT   base_addr;
 		ADDRINT   temp_base;
 		ADDRINT   loop_base;
 		ADDRINT addr;
@@ -129,7 +130,7 @@ typedef struct {
 #define VIRT2PAGETABLE_OFFSET(addr) (((addr) & PAGETABLE_OFFSET_MASK)>>PAGE_BITS)
 
 #define VIRT2PAGE(addr) VIRT2PAGETABLE_OFFSET(addr)
-#define VIRT2OFFSET(addr) ((addr) & OFFSET_MASK) 
+#define VIRT2OFFSET(addr) ((addr) & OFFSET_MASK)
 
 
 #define ALIGN_OFF_MAX	8		/* max alignment offset */
@@ -143,11 +144,20 @@ typedef struct {
 #define OVERFLOW_BITS 11
 #define OVERFLOW_MASK (1 << OVERFLOW_BITS)
 
-
+/* XXX: Latest Intel Pin(3.7) does not support std::array :( */
+// typedef std::array<tag_t, PAGE_SIZE> tag_page_t;
+// typedef std::array<tag_page_t*, PAGETABLE_SZ> tag_table_t;
+// typedef std::array<tag_table_t*, TOP_DIR_SZ> tag_dir_t;
 /* For file taint */
-typedef std::array<tag_t, PAGE_SIZE> tag_page_t;
-typedef std::array<tag_page_t*, PAGETABLE_SZ> tag_table_t;
-typedef std::array<tag_table_t*, TOP_DIR_SZ> tag_dir_t;
+typedef struct {
+	tag_t tag [PAGE_SIZE];
+} tag_page_t;
+typedef struct {
+	tag_page_t* page[PAGETABLE_SZ];
+} tag_table_t;
+typedef struct {
+	tag_table_t* table[TOP_DIR_SZ];
+} tag_dir_t;
 template<typename T> struct tag_traits {};
 template<typename T> T tag_combine(T const & lhs, T const & rhs);
 template<typename T> std::string tag_sprint(T const & tag);
@@ -195,7 +205,7 @@ inline void tag_dir_setb(tag_dir_t & dir, ADDRINT addr, tag_t const & tag)
 	return;
     }
     //LOG("Setting tag "+hexstr(addr)+"\n");
-    if(dir[VIRT2PAGETABLE(addr)] == NULL)
+    if(dir.table[VIRT2PAGETABLE(addr)] == NULL)
     {
       //  LOG("No tag table for "+hexstr(addr)+" allocating new table\n");
         tag_table_t * new_table = new (nothrow) tag_table_t();
@@ -204,12 +214,12 @@ inline void tag_dir_setb(tag_dir_t & dir, ADDRINT addr, tag_t const & tag)
             LOG("Failed to allocate tag table!\n");
             libdft_die();
         }
-        dir[VIRT2PAGETABLE(addr)] = new_table;
+        dir.table[VIRT2PAGETABLE(addr)] = new_table;
     }
 
-    tag_table_t * table = dir[VIRT2PAGETABLE(addr)];
-    if ((*table)[VIRT2PAGE(addr)] == NULL)
-    {   
+    tag_table_t * table = dir.table[VIRT2PAGETABLE(addr)];
+    if ((*table).page[VIRT2PAGE(addr)] == NULL)
+    {
     //    LOG("No tag page for "+hexstr(addr)+" allocating new page\n");
         tag_page_t * new_page = new (nothrow) tag_page_t();
         if (new_page == NULL)
@@ -217,12 +227,12 @@ inline void tag_dir_setb(tag_dir_t & dir, ADDRINT addr, tag_t const & tag)
             LOG("Failed to allocate tag page!\n");
             libdft_die();
         }
-        std::fill(new_page->begin(), new_page->end(), tag_traits<tag_t>::cleared_val);
-        (*table)[VIRT2PAGE(addr)] = new_page;
-    }   
- 
-    tag_page_t * page = (*table)[VIRT2PAGE(addr)];
-    (*page)[VIRT2OFFSET(addr)] = tag;
+        std::fill(new_page->tag, new_page->tag + PAGE_SIZE, tag_traits<tag_t>::cleared_val);
+        (*table).page[VIRT2PAGE(addr)] = new_page;
+    }
+
+    tag_page_t * page = (*table).page[VIRT2PAGE(addr)];
+    (*page).tag[VIRT2OFFSET(addr)] = tag;
     //LOG("Writing tag for "+hexstr(addr)+"\n");
 }
 
@@ -231,12 +241,12 @@ inline tag_t const * tag_dir_getb_as_ptr(tag_dir_t const & dir, ADDRINT addr) {
     if(addr > 0x7fffffffffff){
 	return NULL;
     }
-    if(dir[VIRT2PAGETABLE(addr)]) {
-        tag_table_t * table = dir[VIRT2PAGETABLE(addr)];
-        if ((*table)[VIRT2PAGE(addr)]) {
-            tag_page_t * page = (*table)[VIRT2PAGE(addr)];
+    if(dir.table[VIRT2PAGETABLE(addr)]) {
+        tag_table_t * table = dir.table[VIRT2PAGETABLE(addr)];
+        if ((*table).page[VIRT2PAGE(addr)]) {
+            tag_page_t * page = (*table).page[VIRT2PAGE(addr)];
             if (page != NULL)
-                return &(*page)[VIRT2OFFSET(addr)];
+                return &(*page).tag[VIRT2OFFSET(addr)];
         }
     }
     return &tag_traits<tag_t>::cleared_val;

@@ -57,7 +57,7 @@
 //TAG_TYPE ***directory = NULL;
 
 /* For File taint */
-tag_dir_t tag_dir{};
+tag_dir_t tag_dir;
 const EWAHBoolArray<uint32_t> tag_traits<EWAHBoolArray<uint32_t>>::cleared_val = EWAHBoolArray<uint32_t>{};
 const EWAHBoolArray<uint32_t> tag_traits<EWAHBoolArray<uint32_t>>::set_val = EWAHBoolArray<uint32_t>{};
 
@@ -91,7 +91,7 @@ bool tag_count(EWAHBoolArray<uint32_t> const & tag) {
 /*
  * initialize the tagmap; allocate space
  *
- * returns:	0 on success, 1 on error 
+ * returns:	0 on success, 1 on error
  */
 int
 tagmap_alloc(void)
@@ -126,7 +126,7 @@ tagmap_free(void)
 	free(directory);*/
 }
 
-void 
+void
 alloc_pagetable(ADDRINT addr)
 {
 /*	if (!directory[VIRT2PAGETABLE(addr)]){
@@ -158,8 +158,8 @@ void inline static alloc_tag_page(ADDRINT addr)
  * returns: 0 means no tag, other means tagged
  */
 
-/* 
-	Below defined functions are for 
+/*
+	Below defined functions are for
 	taint spread from file
 */
 /*
@@ -179,7 +179,7 @@ file_tagmap_clrb(ADDRINT addr){
 	tagmap_setb_with_tag(addr, tag_traits<tag_t>::cleared_val);
 }
 
-/* 
+/*
 	Clean n taint starting from addr
 */
 void PIN_FAST_ANALYSIS_CALL
@@ -193,7 +193,7 @@ file_tagmap_clrn(ADDRINT addr, UINT32 n){
 	//LOG("\n");
 }
 
-/* 
+/*
 	Get taint at addr
 */
 tag_t file_tagmap_getb(ADDRINT addr){
