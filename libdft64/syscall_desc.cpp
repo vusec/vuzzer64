@@ -97,6 +97,7 @@ static void post_munmap_hook(THREADID tid, syscall_ctx_t*);
 
 /*My Modification */
 static void post_open_hook(THREADID tid, syscall_ctx_t*);
+static void post_openat_hook(THREADID tid, syscall_ctx_t*);
 static void post_dup3_hook(THREADID tid, syscall_ctx_t*);
 static void post_dup2_hook(THREADID tid, syscall_ctx_t*);
 static void post_dup_hook(THREADID tid, syscall_ctx_t*);
@@ -654,7 +655,7 @@ syscall_desc_t syscall_desc[SYSCALL_MAX] = {
 	/* __NR_migrate_pages = 256 */
 	{ 4, 0, 0, {0 ,0 ,0 ,0 ,0 ,0}, NULL, NULL},
 	/* __NR_openat = 257 */
-	{ 4, 0, 0, {0 ,0 ,0 ,0 ,0 ,0}, NULL, NULL},
+	{ 4, 1, 0, {0 ,0 ,0 ,0 ,0 ,0}, NULL, post_openat_hook},
 	/* __NR_mkdirat = 258 */
 	{ 3, 0, 0, {0 ,0 ,0 ,0 ,0 ,0}, NULL, NULL},
 	/* __NR_mknodat = 259 */
@@ -957,6 +958,13 @@ post_open_hook(THREADID tid, syscall_ctx_t *ctx)
 	}else{
 		LOG("Info ignoring fd " + decstr(fd) + "\n");
 	}
+}
+
+/* __NR_openat post syscall hook */
+static void
+post_openat_hook(THREADID tid, syscall_ctx_t *ctx)
+{
+	post_open_hook(tid, ctx);
 }
 
 /* __NR_open post syscall hook */
