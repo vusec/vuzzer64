@@ -210,6 +210,7 @@ def isNonPrintable(hexstr):
 
 def execute2(tfl,fl, is_initial=0):
     args=config.SUT % tfl
+    args='\"' + args + '\"' # For cmd shell
     pargs=config.PINTNTCMD[:]
     if is_initial == 1:
       runcmd = [pargs[0], args, fl, "0"]
