@@ -15,7 +15,7 @@ BASETMP=os.path.join(mydir,"vutemp")
 # echo 0 | sudo tee /proc/sys/kernel/randomize_va_space
 ##################
 
-# set path to Pin home where pin is found
+# set path to Pin home where pin is found 
 PINHOME=os.getenv('PIN_ROOT', "/home/sanjay/tools/pin-2.14")  + "/pin"
 # for address reading, tell the size i.e. 32/64bit
 BIT64=True
@@ -52,7 +52,7 @@ LIBPICKLE=[]
 NAMESPICKLE=[]
 
 
-#set load offsets of the libraries of interest by observing pintool output for image load. You get this value by fisrt launching the application as trial and then reading the file imageOffset.txt.
+#set load offsets of the libraries of interest by observing pintool output for image load. You get this value by fisrt launching the application as trial and then reading the file imageOffset.txt.  
 LIBOFFSETS=[]
 ##################################################
 
@@ -66,7 +66,7 @@ CLEANOUT=False
 
 #this is set to consider any operand of CMP (normally it should be False)
 ALLCMPOP=False#True
-
+ 
 # this is a directorty for internal use. Don;t change this.
 KEEPD=os.path.join(BASETMP,"keep/")
 #set the directory path whre initial files are kept. this directory is not changed during fuzzing.
@@ -80,7 +80,7 @@ INPUTD=os.path.join(BASETMP,"data/")
 #set error log in this file
 ERRORS="error.log"
 
-# set file path to read addresses of loaded libraries. This is feature is not used currently. We read the offset by running the SUT and then manually get these offsets and write them in LIBOFFSETS variable below (in the same order that names in LIBPICKLE list.
+# set file path to read addresses of loaded libraries. This is feature is not used currently. We read the offset by running the SUT and then manually get these offsets and write them in LIBOFFSETS variable below (in the same order that names in LIBPICKLE list. 
 IMAGELOAD="imageOffset.txt"
 
 
@@ -88,7 +88,7 @@ IMAGELOAD="imageOffset.txt"
 
 BBCMD=["BBOUT=%s ./run_bb.sh" % BBOUT]
 
-# PINTNTCMD=[PINHOME,"-follow_execv","-t", PINTNT,"-filename", "inputf","-stdout","0","--"]
+#PINTNTCMD=[PINHOME,"-follow_execv","-t", PINTNT,"-filename", "inputf","-stdout","0","--"]
 PINTNTCMD=["./run_2.sh"]
 
 # IntelPT related CMD
@@ -108,9 +108,9 @@ skipGen=30
 BBMAXFREQ=10000
 
 #set max weight to be considered for a BB
-BBMAXWEIGHT=2048
+BBMAXWEIGHT=2048 
 
-# set the impact of executing error BB on total number of BB. intuitively, it means how many BBs should be nullified by total error BBs. we calculate a negative weight which is based on the total BBs executed by an input and total error BBs detected so far. and the negative weight will be calculated dynamically by using the formula: - len(bbdict)xERRORBBPERCENTAGE/(NumErrorBB)
+# set the impact of executing error BB on total number of BB. intuitively, it means how many BBs should be nullified by total error BBs. we calculate a negative weight which is based on the total BBs executed by an input and total error BBs detected so far. and the negative weight will be calculated dynamically by using the formula: - len(bbdict)xERRORBBPERCENTAGE/(NumErrorBB) 
 ERRORBBPERCENTAGE=0.5#0.1 #(30%)
 #set this flag if we want to consider BB weights, otherwise each BB have weight 1.
 BBWEIGHT=True
@@ -133,7 +133,7 @@ PREVBBINFO=dict() #this keeps special entries for the previous generation. It is
 #a list to keep inputs that have triggered a new BB in generation. Such inputs will get a chance in the next generation as it is (no mutaiton/crossover).
 SPECIALENTRY=[]
 SPECIAL=os.path.join(BASETMP,"special/") #direcroty to keep inputs that discovered new paths.
-TAINTTMP=os.path.join(BASETMP,"tainttmp/")# directory to keep sampled inputs from SPECIAL dir in case we get many such inputs.
+TAINTTMP=os.path.join(BASETMP,"tainttmp/")# directory to keep sampled inputs from SPECIAL dir in case we get many such inputs. 
 SPECIALDEL=set()#this set contains inputs from special that needs to be deleted as newer inputs cover paths executed by these inputs.
 LESSPRUNE=False#True #this is set to do less aggressive input pruning, when deleting inputs that are no longer corresponding to newer paths.
 BBFORPRUNE=[]# this is the list that keeps the number of newly discovered BB and is used by the code (for forming bitvectors) when pruning the inputs.
@@ -158,7 +158,7 @@ SELECTNUM=3
 NEWTAINTFILES=100
 # this is for speculating stagnation in fitness
 FITMARGIN= 0
-
+ 
 # Set crossover probability
 PROBCROSS=0.3
 
@@ -170,7 +170,7 @@ MOSTCOMNLAST= 8 #For LAva-M dataset, set this value to <=4
 RANDOMCOMN= False#True # this is to skip setting most common values for a offset sometimes. For LAVA-M, set this value to True.
 
 # stoping condition "if found a crash, stop"
-STOPONCRASH=False
+STOPONCRASH=False 
 
 # stoping condition "if run for GENNUM, stop"
 
@@ -190,7 +190,7 @@ BBSEENVECTOR=[] # list of BBs seen in a single generation
 TEMPERRORBB=set() # contains a set of blacklisted BBs that is populated across generations
 #NEWADDEDBB=0 # this is used to count newly added BBs in a generation, so that bit vectors for previous traces can be adjusted.
 BBPERCENT=90
-
+ 
 # temporary directory for creating new generation of inputs
 
 TEMPDIR="datatemp/"
@@ -217,7 +217,7 @@ MORECOMMON=dict() #similar to mostcommon dict, but is used to keep common offset
 MOSTCOMFLAG=False # flag to compute MOSTCOMMON offsets only once.
 MAXOFFSET=20 #this value is used to select mostcommon offsets in file. Offsets upto this value are used for such calculation.
 MINOFFSET=10 # this is to track offsets from the end of the file. so, if file size is 50 (offset 49), we write it as -1 (49-50), -2 (48-50), ... (50-MINOFFSET-50)
-MAXINPUTLEN=50000 # this is the limit (50kb) on length of the input. After that len will be used in fitness calc (as denominator).
+MAXINPUTLEN=50000 # this is the limit (50kb) on length of the input. After that len will be used in fitness calc (as denominator). 
 #pintool cmd: ../../../pin -tool_exit_timeout 1 -t obj-intel64/bbcounts.so -x 20 -l libjpeg -- /usr/bin/eog esu.png
 
 FLASK=False

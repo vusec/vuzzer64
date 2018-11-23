@@ -232,7 +232,7 @@ static void write_heap_taint(const std::string &fname, const std::string &fcstac
 			fprintf(pfile_taint,"%lx",md5.d[i]);
 		int ct = 0;
 		ptag = heap_desc->dtags;
-
+	        
 		for(i=0; i< heap_desc->dlength; i++){
 			if(ptag[i].istaint > 0 )
 				ct++;
@@ -457,7 +457,7 @@ thread_alloc(THREADID tid, CONTEXT *ctx, INT32 flags, VOID *v)
 
 				/* error message */
 				fprintf(stderr,"%s:%u", __func__, __LINE__);
-
+	
 				/* die */
 				libdft_die();
 			}
@@ -473,7 +473,7 @@ thread_alloc(THREADID tid, CONTEXT *ctx, INT32 flags, VOID *v)
 	INIT_LIST_HEAD(&(threads_ctx[tid].rt_stack_head));*/
 }
 
-/*
+/* 
  * syscall enter notification (analysis function)
  *
  * save the system call context and invoke any pre-syscall callback
@@ -492,7 +492,7 @@ sysenter_save(THREADID tid, CONTEXT *ctx, SYSCALL_STANDARD std, VOID *v)
 
 	/* unknown syscall; optimized branch */
 	if (unlikely(syscall_nr >= SYSCALL_MAX)) {
-		fprintf(stderr,"%s:%u: unknown syscall(num=%u)",
+		fprintf(stderr,"%s:%u: unknown syscall(num=%lu)",
 				__func__, __LINE__, syscall_nr);
 		/* syscall number is set to -1; hint for the sysexit_save() */
 		threads_ctx[tid].syscall_ctx.nr = -1;
@@ -558,7 +558,7 @@ sysenter_save(THREADID tid, CONTEXT *ctx, SYSCALL_STANDARD std, VOID *v)
 				break;
 		}
 
-		/*
+		/* 
 		 * dump the architectural state of the processor;
 		 * saved as "auxiliary" data
 		 */
@@ -570,7 +570,7 @@ sysenter_save(THREADID tid, CONTEXT *ctx, SYSCALL_STANDARD std, VOID *v)
 	}
 }
 
-/*
+/* 
  * syscall exit notification (analysis function)
  *
  * save the system call context and invoke any post-syscall callback
@@ -620,7 +620,7 @@ sysexit_save(THREADID tid, CONTEXT *ctx, SYSCALL_STANDARD std, VOID *v)
 		threads_ctx[tid].syscall_ctx.ret =
 			PIN_GetSyscallReturn(ctx, std);
 
-		/*
+		/* 
 		 * dump the architectural state of the processor;
 		 * saved as "auxiliary" data
 		 */
@@ -636,7 +636,7 @@ sysexit_save(THREADID tid, CONTEXT *ctx, SYSCALL_STANDARD std, VOID *v)
 		else {
 			/* default post-syscall handling */
 
-			/*
+			/* 
 			 * the syscall failed; typically 0 and positive
 			 * return values indicate success
 			 */
@@ -647,11 +647,11 @@ sysexit_save(THREADID tid, CONTEXT *ctx, SYSCALL_STANDARD std, VOID *v)
 			/* traverse the arguments map */
 			for (i = 0; i < syscall_desc[syscall_nr].nargs; i++)
 				/* analyze each argument */
-				if (unlikely(syscall_desc[syscall_nr].map_args[i] > 0))
+				if (unlikely(syscall_desc[syscall_nr].map_args[i] > 0)) 
 					/* sanity check -- probably non needed */
 					if (likely(
 								(void *)threads_ctx[tid].syscall_ctx.arg[i] != NULL))
-						/*
+						/* 
 						 * argument i is changed by the system call;
 						 * the length of the change is given by
 						 * map_args[i]
@@ -690,7 +690,7 @@ trace_inspect(TRACE trace, VOID *v)
 			 */
 			ins_indx = (xed_iclass_enum_t)INS_Opcode(ins);
 
-			/*
+			/* 
 			 * invoke the pre-ins insrumentation callback;
 			 * optimized branch
 			 */
@@ -701,7 +701,7 @@ trace_inspect(TRACE trace, VOID *v)
 		//        LOG(INS_Disassemble(ins)+ " " + StringFromAddrint(INS_Address(ins)) + "\n");
 			ins_inspect(ins);
 
-			/*
+			/* 
 			 * invoke the post-ins insrumentation callback;
 			 * optimized branch
 			 */
@@ -725,14 +725,14 @@ trace_inspect(TRACE trace, VOID *v)
 thread_ctx_init(void)
 {
 	/* allocate space for the thread contexts; optimized branch
-	 *
+	 * 
 	 * NOTE: allocation is performed in blocks of THREAD_CTX_BLK
 	 */
 	threads_ctx = new thread_ctx_t[THREAD_CTX_BLK]();
 
-	if (unlikely(threads_ctx == NULL)) {
+	if (unlikely(threads_ctx == NULL)) { 
 ////	if (unlikely((threads_ctx = (thread_ctx_t *)calloc(THREAD_CTX_BLK,
-//						sizeof(thread_ctx_t))) == NULL)) {
+//						sizeof(thread_ctx_t))) == NULL)) { 
 		/* error message */
 		fprintf(stderr,"%s:%u", __func__, __LINE__);
 		/* failed */
@@ -743,7 +743,7 @@ thread_ctx_init(void)
 	/* initialize the context counter */
 	tctx_ct = THREAD_CTX_BLK;
 
-	/*
+	/* 
 	 * thread start hook;
 	 * keep track of the threads and allocate space for the per-thread
 	 * logistics (i.e., syscall context, VCPU, etc)

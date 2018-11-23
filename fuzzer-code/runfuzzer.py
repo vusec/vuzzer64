@@ -70,7 +70,7 @@ def check_env():
 
 def run(cmd):
     print "[*] Just about to run ", cmd
-    proc = subprocess.Popen(" ".join(cmd), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
+    proc = subprocess.Popen(" ".join(cmd), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)	
     stdout, stderr = proc.communicate()
     print "[*] Run complete..\n"
     return proc.returncode
@@ -95,7 +95,7 @@ def form_bitvector(bbdict):
     newbb=0
     temp=set()
     for bbadr in bbdict:
-
+        
         temp.add(bbadr)
         if bbadr not in config.BBSEENVECTOR:
             #added for bit vector formation
@@ -119,7 +119,7 @@ def form_bitvector2(bbdict, name, source, dest):
     newbb=0
     temp=set()
     for bbadr in bbdict:
-
+        
         temp.add(bbadr)
         if bbadr not in source:
             #added for bit vector formation
@@ -217,8 +217,8 @@ def execute2(tfl,fl, is_initial=0):
       runcmd = [pargs[0], args, fl, str(config.TIMEOUT)]
     #pargs[pargs.index("inputf")]=fl
     #runcmd=pargs + args.split.split(' ')
-
-    #print "[*] Executing: ",runcmd
+    
+    #print "[*] Executing: ",runcmd 
     retc = run(runcmd)
     if config.CLEANOUT == True:
         gau.delete_out_file(tfl)
@@ -240,7 +240,7 @@ def extract_offsetStr(offStr,hexs,fsize):
         return (-1000, offsets[:])
 
 def get_non_empty(mat, num):
-
+    
     ind=num
     #mi = 1000000
     while ind < num+4:
@@ -259,7 +259,7 @@ def read_lea():
     leaFD=open("lea.out","r")
     offsets=set() # set to keep all the offsets that are used in LEA instructions.
     pat=re.compile(r"(\d+) (\w+) \{([0-9,]*)\} \{([0-9,]*)\} \{([0-9,]*)\} \{([0-9,]*)\} \{([0-9,]*)\} \{([0-9,]*)\} \{([0-9,]*)\} \{([0-9,]*)\}",re.I)
-
+    
     for ln in leaFD:
         mat=pat.match(ln)
         try:# this is a check to see if lea entry is complete.
@@ -373,7 +373,7 @@ def read_taint(fpath):
                 if tempoff == -1:
                     continue
                 ofs,hexstr=extract_offsetStr(tempoff,mat.group(op2val),fsize)
-
+            
                 if ofs !=-1000:
                     if config.ALLBYTES == True or (hexstr !='\xff\xff\xff\xff' and hexstr !='\x00'):#this is a special case
                         if ofs not in taintOff:
@@ -402,7 +402,7 @@ def read_taint(fpath):
                     ofs,hexstr=extract_offsetStr(tempoff,mat.group(op2val),fsize)
                 else:
                     ofs,hexstr=(-1000,[])
-
+     
                 if ofs !=-1000:
                     if config.ALLBYTES == True or (hexstr !='\xff\xff\xff\xff' and hexstr != '\x00'):#this is a special case
                         if ofs not in taintOff:
@@ -439,17 +439,17 @@ def read_taint(fpath):
 
     #alltaintoff.difference_update(taintOff)
     #print alltaintoff, taintOff
-
+    
     return (alltaintoff,taintOff)
 
-
+     
 
 def get_taint(dirin, is_initial=0):
     ''' This function is used to get taintflow for each CMP instruction to find which offsets in the input are used at the instructions. It also gets the values used in the CMP.'''
     print "[*] starting taintflow calculation."
     files=os.listdir(dirin)
     #taintmap=dict()#this is a dictionary to keep taintmap of each input file. Key is the input file name and value is a tuple returned by read_taint, wherein 1st element is a set of all offsets used in cmp and 2nd elment is a dictionary with key a offset and value is a set of values at that offsetthat were found in CMP instructions.
-    #mostcommon=dict()# this dictionary keeps offsets which are common across all the inputs with same value set.
+    #mostcommon=dict()# this dictionary keeps offsets which are common across all the inputs with same value set. 
     for fl in files:
         if fl in config.TAINTMAP:
             continue
@@ -464,7 +464,7 @@ def get_taint(dirin, is_initial=0):
             continue
             gau.die("pintool terminated with error 255 on input %s"%(pfl,))
         config.TAINTMAP[fl]=read_taint(pfl)
-        config.LEAMAP[fl]=read_lea()
+        config.LEAMAP[fl]=read_lea()          
         #print config.TAINTMAP[fl][1]
         #raw_input("press key..")
     if config.MOSTCOMFLAG==False:
@@ -476,9 +476,9 @@ def get_taint(dirin, is_initial=0):
                     config.TAINTMAP[k1][0].add(off1)
                     #print "[==] ",k1,off1
                     continue
-
-
-
+                    
+                    
+                    
                 for k2,v2 in config.TAINTMAP.iteritems():
                     if off1 not in v2[1]:
                         config.TAINTMAP[k1][0].add(off1)
@@ -522,8 +522,8 @@ def get_taint(dirin, is_initial=0):
                     #print config.MOSTCOMMON[off1]
             break # we just want to take one input and check if all the offsets in other inputs have commonality.
     #print config.MOSTCOMMON, config.MORECOMMON
-    #gw = raw_input("press enter")
-    print "[*] taintflow finished."
+    #gw = raw_input("press enter") 
+    print "[*] taintflow finished."     
 
 def dry_run():
     ''' this function executes the initial test set to determine error handling BBs in the SUT. Such BBs are given zero weights during actual fuzzing.
@@ -567,7 +567,7 @@ def dry_run():
                 print "Signal: %d"% (retc,)
                 gau.die("looks like we already got a crash!!")
             tempbad.append(set(bbs.keys()) - config.GOODBB)
-
+            
         tempcomn=set(tempbad[0])
         for di in tempbad:
             tempcomn.intersection_update(set(di))
@@ -588,14 +588,14 @@ def dry_run():
                 config.ERRORBBAPP.add(ele)
             else:
                 config.ERRORBBLIB.add(ele-baseadr)
-
+                         
     del tempbad
     del badbb
     #del tempgood
     return len(config.GOODBB),len(config.ERRORBBALL)
-
+    
 def run_error_bb(pt):
-    print "[*] Starting run_error_bb."
+    print "[*] Starting run_error_bb." 
     files = os.listdir(config.INPUTD)
     for fl in files:
         tfl=os.path.join(config.INPUTD,fl)
@@ -665,8 +665,8 @@ def main():
     config.LIBPICKLE=[w for w in args.weight.split(',')]
     config.NAMESPICKLE=[n for n in args.name.split(',')]
     config.LIBOFFSETS=[o for o in args.offsets.split(',')]
-    # ih=config.BBCMD.index("#") # this is just to find the index of the placeholder in BBCMD list to replace it with the libname
-    # config.BBCMD[ih]=args.libname
+    #ih=config.BBCMD.index("#") # this is just to find the index of the placeholder in BBCMD list to replace it with the libname
+    #config.BBCMD[ih]=args.libname
 
     ###################################
 
@@ -676,12 +676,12 @@ def main():
     except OSError:
         pass
     os.mkdir(config.KEEPD)
-
+    
     try:
         os.mkdir("outd")
     except OSError:
         pass
-
+    
     try:
         os.mkdir("outd/crashInputs")
     except OSError:
@@ -692,12 +692,12 @@ def main():
         os.mkdir(config.SPECIAL)
     except OSError:
         gau.emptyDir(config.SPECIAL)
-
+    
     try:
         os.mkdir(config.INTER)
     except OSError:
         gau.emptyDir(config.INTER)
-
+   
     ###### open names pickle files
     gau.prepareBBOffsets()
     # lets initialize the BBFORPRUNE list from thie cALLBB set.
@@ -721,7 +721,7 @@ def main():
     noprogress=0
     currentfit=0
     lastfit=0
-
+    
     config.CRASHIN.clear()
     stat=open("stats.log",'w')
     stat.write("**** Fuzzing started at: %s ****\n"%(datetime.now().isoformat('+'),))
@@ -742,14 +742,14 @@ def main():
     # fisrt we get taint of the intial inputs
     get_taint(config.INITIALD,1)
     #print "MOst common offsets and values:", config.MOSTCOMMON
-
+    
     config.MOSTCOMFLAG=True
     crashhappend=False
     filest = os.listdir(config.INPUTD)
     filenum=len(filest)
     if filenum < config.POPSIZE:
         gau.create_files(config.POPSIZE - filenum)
-
+    
     if len(os.listdir(config.INPUTD)) != config.POPSIZE:
         gau.die("something went wrong. number of files is not right!")
 
@@ -765,27 +765,27 @@ def main():
     todelete=set()#temp set to keep file names that will be deleted in the special folder
     while True:
         print "[**] Generation %d\n***********"%(genran,)
-
+        
         del config.TEMPTRACE[:]
         del config.BBSEENVECTOR[:]
-        SPECIALCHANGED= False # this is set when a config.SPECIAL gets at least one new input per generation.
+        SPECIALCHANGED= False # this is set when a config.SPECIAL gets at least one new input per generation. 
         config.TMPBBINFO.clear()
         config.TMPBBINFO.update(config.PREVBBINFO)
-
+        
         fitnes=dict()
         execs=0
         config.cPERGENBB.clear()
         config.GOTSTUCK=False
-
+ 
         if config.ERRORBBON == True:
             if genran > config.GENNUM/5:
                 bbslide = max(bbslide,config.GENNUM/20)
                 keepslide=max(keepslide,config.GENNUM/100)
                 keepfilenum=keepfilenum/2
-
+        
             if 0< genran < config.GENNUM/5 and genran%keepslide == 0:
                 copy_files(config.INPUTD,config.KEEPD,keepfilenum)
-
+                
         #lets find out some of the error handling BBs
             if  genran >40 and genran%bbslide==0:
                 stat.write("\n**** Error BB cal started ****\n")
@@ -828,8 +828,8 @@ def main():
                                 del config.TAINTMAP[sfl]
                     for ele in todelete:
                         del config.SPECIALBITVECTORS[ele]
-
-
+                    
+ 
                 if retc < 0 and retc != -2:
                     print "[*]Error code is %d"%(retc,)
                     efd.write("%s: %d\n"%(tfl, retc))
@@ -844,7 +844,7 @@ def main():
                             shutil.copyfile(tfl,npath)
                             if SPECIALADDED==False:
                                 shutil.copy(tfl,config.SPECIAL)
-
+                                
                             config.CRASHIN.add(fl)
                     if config.STOPONCRASH == True:
                         #efd.close()
@@ -894,7 +894,7 @@ def main():
                     get_taint(config.TAINTTMP)
             #print "MOst common offsets and values:", config.MOSTCOMMON
             #gg=raw_input("press any key to continue..")
-        print "[*] Going for new generation creation.\n"
+        print "[*] Going for new generation creation.\n" 
         gau.createNextGeneration3(fitnes,genran)
         #raw_input("press any key...")
 
@@ -903,13 +903,13 @@ def main():
     libfd_mm.close()
     libfd.close()
     endtime=time.clock()
-
+    
     print "[**] Totol time %f sec."%(endtime-starttime,)
     print "[**] Fuzzing done. Check %s to see if there were crashes.."%(config.ERRORS,)
-
+    
 
 if __name__ == '__main__':
-
+    
 
     fuzzthread = threading.Thread(target = main)
 
