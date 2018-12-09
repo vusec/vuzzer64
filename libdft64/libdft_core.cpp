@@ -61,6 +61,9 @@ extern std::map<pair<int,int>, int> file_offsets;
 #define M128TAG(ADDR) \
 {MTAG(ADDR), MTAG(ADDR+1), MTAG(ADDR+2), MTAG(ADDR+3), MTAG(ADDR+4), MTAG(ADDR+5), MTAG(ADDR+6), MTAG(ADDR+7),  MTAG(ADDR+8),  MTAG(ADDR+9), MTAG(ADDR+10), MTAG(ADDR+11),  MTAG(ADDR+12),  MTAG(ADDR+13),  MTAG(ADDR+14), MTAG(ADDR+15)}  
 
+/* XXX: Latest Intel Pin (3.7) doesn't support INT2STR */
+#define INT2STR( x ) static_cast< std::ostringstream & >( \
+        ( std::ostringstream() << std::dec << x ) ).str()
 
 UINT32 get_reg_size(REG reg){
         if(REG_is_xmm(reg)){
@@ -2484,7 +2487,7 @@ file_cmp_r2r(THREADID tid, ADDRINT ins_address, uint32_t reg_dest, uint64_t reg_
 				break;
 		}
 
-		output[0] = std::to_string(size_dest*8);
+		output[0] = INT2STR(size_dest*8);
 		output[1] = "reg reg";
 		print_log();
 	}
@@ -2536,7 +2539,7 @@ file_cmp_m2r(THREADID tid, ADDRINT ins_address, uint32_t reg_dest, uint64_t reg_
 				output[20] = hexstr(*(uint8_t *)src_addr);
 				break;
 		}
-		output[0] = std::to_string(size_dest*8);
+		output[0] = INT2STR(size_dest*8);
 		output[1] = "reg mem";
 		print_log();
 	}
@@ -2577,7 +2580,7 @@ file_cmp_i2r(THREADID tid, ADDRINT ins_address, uint32_t reg_dest, uint64_t reg_
 				output[20] = hexstr((uint8_t)imm_src_val);
 				break;
 		}	
-		output[0] = std::to_string(size_dest*8);
+		output[0] = INT2STR(size_dest*8);
 		output[1] = "reg imm";
 		print_log();
 	}
@@ -2632,7 +2635,7 @@ file_cmp_r2m(THREADID tid, ADDRINT ins_address, ADDRINT dest_addr, uint32_t reg_
 				output[20] = hexstr((uint8_t)reg_src_val);
 				break;
 		}
-		output[0] = std::to_string(size_dest*8);
+		output[0] = INT2STR(size_dest*8);
 		output[1] = "mem reg";
 		print_log();
 	}
@@ -2697,7 +2700,7 @@ file_cmp_m2m(ADDRINT ins_address, ADDRINT dest_addr, ADDRINT src_addr, uint32_t 
                                 break;
                 }
 
-		output[0] = std::to_string(size_dest*8);
+		output[0] = INT2STR(size_dest*8);
 		output[1] = "mem mem";
              //   LOG("\n");
 		print_log();
@@ -2740,7 +2743,7 @@ file_cmp_i2m(ADDRINT ins_address, ADDRINT dest_addr, uint32_t imm_src_val, uint3
 				break;
 		}
 		output[20] = hexstr(imm_src_val);
-		output[0] = std::to_string(size_dest*8);
+		output[0] = INT2STR(size_dest*8);
 		output[1] = "mem imm";
 		print_log();
 	}
@@ -5873,4 +5876,3 @@ ins_inspect(INS ins)
 			break;
 	}
 }
-

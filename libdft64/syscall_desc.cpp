@@ -97,11 +97,46 @@ static void post_munmap_hook(THREADID tid, syscall_ctx_t*);
 
 /*My Modification */
 static void post_open_hook(THREADID tid, syscall_ctx_t*);
+static void post_openat_hook(THREADID tid, syscall_ctx_t*);
 static void post_dup3_hook(THREADID tid, syscall_ctx_t*);
 static void post_dup2_hook(THREADID tid, syscall_ctx_t*);
 static void post_dup_hook(THREADID tid, syscall_ctx_t*);
 static void post_close_hook(THREADID tid, syscall_ctx_t*);
 static void post_pread64_hook(THREADID tid, syscall_ctx_t*);
+
+/* XXX: Latest Intel Pin (3.7) doesn't support pread64 and stat
+ * (See $PIN_ROOT/intel64/runtime/pincrt/libc-dynamic.so) */
+ssize_t pread64(int fd, void *buf, size_t nbyte, off64_t offset) {
+	/* Since we must not change the file pointer preserve the value so that
+     	we can restore it later.  */
+  	int save_errno;
+  	ssize_t result;
+  	off64_t old_offset = lseek64(fd, 0, SEEK_CUR);
+  	if (old_offset == (off64_t) -1)
+    		return -1;
+  	/* Set to wanted position.  */
+  	if (lseek(fd, offset, SEEK_SET) == (off64_t) -1)
+    		return -1;
+  	/* Write out the data.  */
+  	result = read(fd, buf, nbyte);
+	  /* Now we have to restore the position.  If this fails we have to
+	     return this as an error.  But if the writing also failed we
+	     return this error.  */
+  	save_errno = errno;
+  	if (lseek(fd, old_offset, SEEK_SET) == (off64_t) -1) {
+      		if (result == -1)
+        	errno = save_errno;
+      		return -1;
+    	}
+  	errno = save_errno;
+  	return result;
+}
+
+int stat(const char *name, struct stat *buf) {
+	int result;
+	result = syscall(__NR_stat, name, buf);
+	return result;
+}
 
 /* syscall descriptors */
 syscall_desc_t syscall_desc[SYSCALL_MAX] = {
@@ -620,7 +655,7 @@ syscall_desc_t syscall_desc[SYSCALL_MAX] = {
 	/* __NR_migrate_pages = 256 */
 	{ 4, 0, 0, {0 ,0 ,0 ,0 ,0 ,0}, NULL, NULL},
 	/* __NR_openat = 257 */
-	{ 4, 0, 0, {0 ,0 ,0 ,0 ,0 ,0}, NULL, NULL},
+	{ 4, 1, 0, {0 ,0 ,0 ,0 ,0 ,0}, NULL, post_openat_hook},
 	/* __NR_mkdirat = 258 */
 	{ 3, 0, 0, {0 ,0 ,0 ,0 ,0 ,0}, NULL, NULL},
 	/* __NR_mknodat = 259 */
@@ -737,10 +772,6 @@ syscall_desc_t syscall_desc[SYSCALL_MAX] = {
 	{ 3, 0, 1, {0 ,sizeof(struct sched_attr) ,0 ,0 ,0 ,0}, NULL, NULL},
 	/* __NR_sched_getattr = 315 */
 	{ 4, 0, 1, {0 ,sizeof(struct sched_attr) ,0 ,0 ,0 ,0}, NULL, NULL},
-	/* __NR_renameat2 = 316 */
-	{ 5, 0, 0, {0 ,0 ,0 ,0 ,0 ,0}, NULL, NULL},
-	/* __NR_seccomp = 317 */
-	{ 3, 0, 0, {0 ,0 ,0 ,0 ,0 ,0}, NULL, NULL},
 };
 
 
@@ -789,7 +820,7 @@ syscall_set_post(syscall_desc_t *desc, void (* post)(THREADID, syscall_ctx_t*))
 
 	/* update the post-syscall callback */
 	desc->post = post;
-	
+
 	/* set the save arguments flag */
 	desc->save_args = 1;
 
@@ -898,7 +929,7 @@ post_read_hook(THREADID tid, syscall_ctx_t *ctx)
 				tag_sprint(ts_prev) + " -> " +
 				tag_sprint(file_tagmap_getb(buf+i)) + "\n"
 			);*/
-			i++;	
+			i++;
 		}
 	}else{
 		size_t i = 0;
@@ -927,6 +958,13 @@ post_open_hook(THREADID tid, syscall_ctx_t *ctx)
 	}else{
 		LOG("Info ignoring fd " + decstr(fd) + "\n");
 	}
+}
+
+/* __NR_openat post syscall hook */
+static void
+post_openat_hook(THREADID tid, syscall_ctx_t *ctx)
+{
+	post_open_hook(tid, ctx);
 }
 
 /* __NR_open post syscall hook */
@@ -1011,7 +1049,7 @@ post_pread64_hook(THREADID tid, syscall_ctx_t *ctx){
 		}
 	}
 //	tagmap_clrn(buf, nr);
-	
+
 }
 
 /* __NR_mmap post syscall hook */
@@ -1063,7 +1101,7 @@ post_mmap_hook(THREADID tid, syscall_ctx_t *ctx)
 				int nread = pread64(fd, buf2, (ssize_t) 4, 0);
 				LOG(decstr(fd) + " " +  decstr(nread) + "\n");
 				char *a = (char *)buf;
-				if(nread == 4){		
+				if(nread == 4){
 					if(strcmp(buf2, a) == 0){
 						offset_start = 0;
 					}else{
@@ -1096,7 +1134,7 @@ post_mmap_hook(THREADID tid, syscall_ctx_t *ctx)
 			}
 		//}
 	}
-	
+
 	/* emulate the clear_tag() call */
 //	tagmap_clrn((size_t)ctx->ret, offset);
 
@@ -1117,4 +1155,3 @@ post_munmap_hook(THREADID tid, syscall_ctx_t *ctx)
 		file_tagmap_clrb(buf+i);
 	}
 }
-

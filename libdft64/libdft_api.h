@@ -57,7 +57,7 @@
 #define MAX_ARG_PAGES 32
 #define ARG_STACK_SIZE MAX_ARG_PAGES*PAGE_SIZE
 
-#define SYSCALL_MAX	__NR_seccomp+1	/* max syscall number */
+#define SYSCALL_MAX	__NR_sched_getattr+1	/* max syscall number */
 #define SYSCALL_ARG_NUM	6			/* syscall arguments */
 #define SYSCALL_ARG0	0			/* 1st argument in syscall */
 #define SYSCALL_ARG1	1			/* 2nd argument in syscall */
@@ -230,4 +230,3 @@ size_t REG8_INDX(REG);
 
 
 #endif /* __LIBDFT_API_H__ */
-

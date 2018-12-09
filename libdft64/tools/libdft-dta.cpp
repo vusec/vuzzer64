@@ -98,12 +98,10 @@ main(int argc, char **argv, char* envp[])
 {
 	/* initialize the core tagging engine */
 	std::string s;
-	int pid;
-	FILE *fp;
 	if (unlikely(libdft_init(argc, argv) != 0))
 		/* failed */
 		goto err;
-	
+
 	//f (KnobImgDesc.Value().empty())
 	//	return Usage();
 
@@ -115,7 +113,7 @@ main(int argc, char **argv, char* envp[])
 	    mmap_type = 1;
             //read_offset.open("read.out");
         }
-	//s = KnobImgDesc.Value() + "/pid"; 
+	//s = KnobImgDesc.Value() + "/pid";
 	//fp = fopen(s.c_str(),"w+");
 	//pid = PIN_GetPid();
 	//fprintf(fp, "%d\n", pid);
@@ -132,7 +130,7 @@ main(int argc, char **argv, char* envp[])
 
 	/* start execution */
 	libdft_start();
-	
+
 	/* typically not reached; make the compiler happy */
 	return EXIT_SUCCESS;
 

@@ -70,7 +70,7 @@
 	#define STDERR 2
 #endif
 
-/* 
+/*
  * definition of old_*, linux_*, and OS-specific types
  *
  * this might break in the future; keep it up2date
@@ -188,13 +188,6 @@ struct fs_disk_quota {
 
 #define IPC_FIX	256
 
-union semun {
-	int		val;
-	struct semid_ds	*buf;
-	unsigned short	*array;
-	struct seminfo	*__buf;
-};
-
 struct sched_attr {
 	__u32 size;
 
@@ -228,8 +221,8 @@ typedef __u32 u32;
 typedef __u64 git_t;
 
 /*struct mmsghdr {
-	struct msghdr msg_hdr;  
-	unsigned int  msg_len;  
+	struct msghdr msg_hdr;
+	unsigned int  msg_len;
 };*/
 
 

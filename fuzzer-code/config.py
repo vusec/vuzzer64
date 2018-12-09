@@ -16,7 +16,7 @@ BASETMP=os.path.join(mydir,"vutemp")
 ##################
 
 # set path to Pin home where pin is found 
-PINHOME=os.getenv('PIN_ROOT', "/home/sanjay/tools/pin-2.14")  + "/pin.sh"
+PINHOME=os.getenv('PIN_ROOT', "/home/sanjay/tools/pin-2.14")  + "/pin"
 # for address reading, tell the size i.e. 32/64bit
 BIT64=True
 TIMEOUT=1200#180
@@ -86,7 +86,7 @@ IMAGELOAD="imageOffset.txt"
 
 # this is the main command that is passed to run() function in runfuzzer.py
 
-PINCMD=[PINHOME,"-tool_exit_timeout", "1","-t", PINTOOL,"-o", BBOUT,"-x", "0","-libc","0","-l","#","--"]
+BBCMD=["BBOUT=%s ./run_bb.sh" % BBOUT]
 
 #PINTNTCMD=[PINHOME,"-follow_execv","-t", PINTNT,"-filename", "inputf","-stdout","0","--"]
 PINTNTCMD=["./run_2.sh"]
@@ -221,4 +221,3 @@ MAXINPUTLEN=50000 # this is the limit (50kb) on length of the input. After that 
 #pintool cmd: ../../../pin -tool_exit_timeout 1 -t obj-intel64/bbcounts.so -x 20 -l libjpeg -- /usr/bin/eog esu.png
 
 FLASK=False
-

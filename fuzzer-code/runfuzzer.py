@@ -70,7 +70,7 @@ def check_env():
 
 def run(cmd):
     print "[*] Just about to run ", cmd
-    proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    proc = subprocess.Popen(" ".join(cmd), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)	
     stdout, stderr = proc.communicate()
     print "[*] Run complete..\n"
     return proc.returncode
@@ -165,7 +165,7 @@ def calculate_error_bb():
 def execute(tfl):
     bbs={}
     args=config.SUT % tfl
-    runcmd=config.PINCMD+args.split(' ')
+    runcmd=config.BBCMD+args.split(' ')
     try:
         os.unlink(config.BBOUT)
     except:
@@ -210,6 +210,7 @@ def isNonPrintable(hexstr):
 
 def execute2(tfl,fl, is_initial=0):
     args=config.SUT % tfl
+    args='\"' + args + '\"' # For cmd shell
     pargs=config.PINTNTCMD[:]
     if is_initial == 1:
       runcmd = [pargs[0], args, fl, "0"]
@@ -665,8 +666,8 @@ def main():
     config.LIBPICKLE=[w for w in args.weight.split(',')]
     config.NAMESPICKLE=[n for n in args.name.split(',')]
     config.LIBOFFSETS=[o for o in args.offsets.split(',')]
-    ih=config.PINCMD.index("#") # this is just to find the index of the placeholder in PINCMD list to replace it with the libname
-    config.PINCMD[ih]=args.libname
+    #ih=config.BBCMD.index("#") # this is just to find the index of the placeholder in BBCMD list to replace it with the libname
+    #config.BBCMD[ih]=args.libname
 
     ###################################
 
@@ -918,4 +919,3 @@ if __name__ == '__main__':
     if config.FLASK:
 
         socketio.run(app, host="0.0.0.0", port=5000)
-
