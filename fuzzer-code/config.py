@@ -26,6 +26,7 @@ PINTOOL=mydir + "/obj-intel64/bbcounts2.so"
 # and for taintflow pintoo
 PINTNT=mydir+"/obj-intel64/dtracker.so"
 
+LIBS=" "
 # set file path to read executed BBs and their respective frequencies
 BBOUT=mydir + "/outd/bbc.out"
 
@@ -86,7 +87,7 @@ IMAGELOAD="imageOffset.txt"
 
 # this is the main command that is passed to run() function in runfuzzer.py
 
-BBCMD=["BBOUT=%s ./run_bb.sh" % BBOUT]
+BBCMD=["BBOUT=%s" % BBOUT, "LIBS=", "./run_bb.sh"]
 
 #PINTNTCMD=[PINHOME,"-follow_execv","-t", PINTNT,"-filename", "inputf","-stdout","0","--"]
 PINTNTCMD=["./run_2.sh"]
