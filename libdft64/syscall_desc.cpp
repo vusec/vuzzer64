@@ -900,7 +900,7 @@ post_read_hook(THREADID tid, syscall_ctx_t *ctx)
 	nbytes = (uint32_t)ctx->ret;
 
 	int fd = ctx->arg[SYSCALL_ARG0];
-	LOG("Setting taint " + decstr(fd) + " " + decstr(nbytes) + "\n");
+
 	/*std::set<int>::iterator it;
 	for(it=fdset.begin();it!=fdset.end();it++){
 		LOG(decstr(*it) + "\n");
@@ -915,6 +915,7 @@ post_read_hook(THREADID tid, syscall_ctx_t *ctx)
 		}else{
 			read_
 		}*/
+	  LOG("Setting taint " + decstr(fd) + " " + decstr(nbytes) + "bytes\n");
 		read_offset_start = lseek(fd, 0, SEEK_CUR);
 		if(unlikely(read_offset_start < 0)){
 			LOG("Error on lseeking " + decstr(fd) + "\n");
