@@ -11,21 +11,21 @@ Originally (in turn), this Project depends heavily on a  modified version of Dat
 Please see wikiHOWTO.md for a step-by-step procedure to run the VUzzer. This file also contains explanation for most of the options. Also read "datatemp/REDME-dataSet.md" for more information about the datasets and configurations that we used in original VUzzer paper. We have provided seed inputs for several applications in "datatemp" folder.
 
 
-#Requirements
+# Requirements
 -------------
 The requirements for running VUzzer64 are:
 
 *  A C++11 compiler and unix build utilities (e.g. GNU Make). 
-*  Version 2.13 of Intel Pin (yes, we still have this legacy dependency!!). 
-*  EWAGBoolArray: https://github.com/lemire/EWAHBoolArray/ - To install it in your system just copy headers file(https://github.com/lemire/EWAHBoolArray/tree/master/headers)
+*  Version 3.7 of Intel Pin. 
+*  EWAGBoolArray 0.4.0: https://github.com/lemire/EWAHBoolArray/releases/tag/0.4.0 - To install it in your system just copy headers file(/path/to/EWAHBoolArray-0.4.0/headers)
    in /usr/include folder.
 *  BitMagic: http://bmagic.sourceforge.net/ - To install it in your system do ```sudo apt-get install bmagic```
 *  BitVector module for python.
 *  IDA disassembler to run static analysis part of VUzzer. Ashley (a MS student from Grenoble) visited VUSec as intern and developed a 'angr' (http://angr.io/) based static analysis module. The code can be found at https://github.com/ash09/angr-static-analysis-for-vuzzer64 (yet to be populated!). However, it should be noted that we have not tested this script much and one can expect some glitches specially on large complex applications! If you have questions on this script, please direct them to Ashley.
 
-We have tested VUzzer by running it on Ubuntu 14.04 LTS, Linux 3.19.0.80 image. It should be noted that with kernel 4.x.y, Pin (2.13) gets panic. We recommend setting up the same environment to use VUzzer. We repeat kernel 4.x.y does not work. 
+We have tested VUzzer by running it on Ubuntu 18.04 LTS, Linux 4.15.0 image.   
 
-#Installation
+# Installation
 Follow the steps to install VUzzer64:
 ```sh
 0. cd vuzzer64
@@ -33,10 +33,9 @@ Follow the steps to install VUzzer64:
 2. export PIN_ROOT=path_to_pin_directory
 3. export DFT_HOME=$(pwd)/libdft64
 4. cd fuzzer-code
-5. make -f mymakefile
+5. make
 6. cd ../libdft64
 7. make
-8. make tools
 9. cd ..
 ```
 
