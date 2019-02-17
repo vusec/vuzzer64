@@ -657,7 +657,7 @@ def main():
     parser.add_argument('-n','--name', help='Path of the pickle file(s) containing strings from CMP inst (separated by comma if there are two).',required=True)
     parser.add_argument('-l','--libnum', help='Nunber of binaries to monitor (only application or used libraries)',required=False, default=1)
     parser.add_argument('-o','--offsets',help='base-address of application and library (if used), separated by comma', required=False, default='0x00000000')
-    parser.add_argument('-b','--libname',help='library name to monitor',required=False, default='')
+    parser.add_argument('-b','--libname',help='library name to monitor',required=False, default='#')
     args = parser.parse_args()
     config.SUT=args.sut
     config.INITIALD=os.path.join(config.INITIALD, args.inputd)
@@ -666,8 +666,9 @@ def main():
     config.LIBPICKLE=[w for w in args.weight.split(',')]
     config.NAMESPICKLE=[n for n in args.name.split(',')]
     config.LIBOFFSETS=[o for o in args.offsets.split(',')]
-    #ih=config.BBCMD.index("#") # this is just to find the index of the placeholder in BBCMD list to replace it with the libname
-    #config.BBCMD[ih]=args.libname
+    config.LIBS=args.libname
+    ih=config.BBCMD.index("LIBS=") # this is just to find the index of the placeholder in BBCMD list to replace it with the libname
+    config.BBCMD[ih]="LIBS=%s" % args.libname
 
     ###################################
 
