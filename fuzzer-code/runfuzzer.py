@@ -69,11 +69,12 @@ def check_env():
         #gau.die("config.BASETMP is not mounted as tmpfs filesystem. Run: sudo mkdir /mnt/vuzzer , followed by sudo mount -t tmpfs -o size=1024M tmpfs /mnt/vuzzer")
 
 def run(cmd):
-    print "[*] Just about to run ", cmd
+    #print "[*] Just about to run ", cmd
     proc = subprocess.Popen(" ".join(cmd), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)	
     stdout, stderr = proc.communicate()
-    print "[*] Run complete..\n"
-    return proc.returncode
+    #print "[*] Run complete..\n"
+    #print "## RC %d"%proc.returncode
+    return 128-proc.returncode # Note: the return is subtracted from 128 to make it compatible with the python Popen return code. Earlier, we were not using the SHELL with Popen.
 
 def sha1OfFile(filepath):
     with open(filepath, 'rb') as f:
@@ -244,7 +245,7 @@ def get_non_empty(mat, num):
     
     ind=num
     #mi = 1000000
-    while ind < num+4:
+    while ind < num+9:
 	# I have changed this
         if mat.group(ind) !='':
             #mi = min(mi, int(mat.group(ind)))
@@ -335,7 +336,7 @@ def read_taint(fpath):
                 ofs,hexstr=extract_offsetStr(tempoff,mat.group(op1val),fsize)
             elif mat.group(op2start) =='' and mat.group(op1start) !='':
                 tempoff=get_non_empty(mat,op1start)#mat.group(5)
-                if tempoff ==-1:
+                if tumpoff ==-1:
                     continue
                 ofs,hexstr=extract_offsetStr(tempoff,mat.group(op2val),fsize)
             else:
@@ -447,7 +448,7 @@ def read_taint(fpath):
 
 def get_taint(dirin, is_initial=0):
     ''' This function is used to get taintflow for each CMP instruction to find which offsets in the input are used at the instructions. It also gets the values used in the CMP.'''
-    print "[*] starting taintflow calculation."
+    #print "[*] starting taintflow calculation."
     files=os.listdir(dirin)
     #taintmap=dict()#this is a dictionary to keep taintmap of each input file. Key is the input file name and value is a tuple returned by read_taint, wherein 1st element is a set of all offsets used in cmp and 2nd elment is a dictionary with key a offset and value is a set of values at that offsetthat were found in CMP instructions.
     #mostcommon=dict()# this dictionary keeps offsets which are common across all the inputs with same value set. 
@@ -469,7 +470,7 @@ def get_taint(dirin, is_initial=0):
         #print config.TAINTMAP[fl][1]
         #raw_input("press key..")
     if config.MOSTCOMFLAG==False:
-        print "computing MOSTCOM calculation..."
+        #print "computing MOSTCOM calculation..."
         for k1,v1 in config.TAINTMAP.iteritems():
             for off1,vset1 in v1[1].iteritems():
                 tag=True
@@ -488,17 +489,17 @@ def get_taint(dirin, is_initial=0):
                         break
                     #print "passed..", off1
                     if len(set(vset1) & set(v2[1][off1]))==0:#set(vset1) != set(v2[off1])
-                        print k1, k2, off1, set(vset1), set(v2[1][off1])
+                        #print k1, k2, off1, set(vset1), set(v2[1][off1])
                         config.TAINTMAP[k1][0].add(off1)
                         tag=False
                         break
                     #print "passed set", vset1
                 if tag==True:
-                    config.MOSTCOMMON[off1]=vset1[:]
+                    config.MOSTCOMMON[off1]=list(set(vset1[:]))
                     #print "[++]",config.MOSTCOMMON[off1]
             break # we just want to take one input and check if all the offsets in other inputs have commonality.
     else:
-        print "computing MORECOM calculation..."
+        #print "computing MORECOM calculation..."
         for k1,v1 in config.TAINTMAP.iteritems():
             for off1,vset1 in v1[1].iteritems():
                 tag=True
@@ -511,18 +512,16 @@ def get_taint(dirin, is_initial=0):
                         #print k2,v2[1]
                         tag=False
                         break
-                    #print "passed..", off1
                     if len(set(vset1) ^ set(v2[1][off1]))>3:#vset1 != v2[1][off1]:
-                        print k2, vset1, v2[1][off1]
+                        #print k2, vset1, v2[1][off1]
                         config.TAINTMAP[k1][0].add(off1)
                         tag=False
                         break
-                    #print "passed set", vset1
                 if tag==True:
-                    config.MORECOMMON[off1]=vset1[:]
+                    config.MORECOMMON[off1]=list(set(vset1[:]))
                     #print config.MOSTCOMMON[off1]
             break # we just want to take one input and check if all the offsets in other inputs have commonality.
-    #print config.MOSTCOMMON, config.MORECOMMON
+    #print config.MOSTCOMMON, '=====', config.MORECOMMON
     #gw = raw_input("press enter") 
     print "[*] taintflow finished."     
 
@@ -699,7 +698,28 @@ def main():
         os.mkdir(config.INTER)
     except OSError:
         gau.emptyDir(config.INTER)
-   
+   #############################################################################
+    #let us get the base address of the main executable.
+    ifiles=os.listdir(config.INITIALD)
+    for fl in ifiles:
+        tfl=os.path.join(config.INITIALD,fl)
+        try:
+            f=open(tfl, 'r')
+            f.close()
+        except:
+            gau.die("can not open our own input %s!"%(tfl,))
+        (ibbs,iretc)=execute(tfl)
+        break # we just want to run the executable once to get its load address
+
+    imgOffFd=open("imageOffset.txt",'r')
+    for ln in imgOffFd:
+        if "Main:" in ln:
+            lst=ln.split()
+            break
+    config.LIBOFFSETS[0]=lst[1][:]
+    imgOffFd.close()
+    #############################################################################
+ 
     ###### open names pickle files
     gau.prepareBBOffsets()
     # lets initialize the BBFORPRUNE list from thie cALLBB set.
@@ -744,7 +764,8 @@ def main():
     # fisrt we get taint of the intial inputs
     get_taint(config.INITIALD,1)
     #print "MOst common offsets and values:", config.MOSTCOMMON
-    
+    #print "Base address: %s"%config.LIBOFFSETS[0]
+    #raw_input("Press enter to continue..")    
     config.MOSTCOMFLAG=True
     crashhappend=False
     filest = os.listdir(config.INPUTD)
@@ -766,7 +787,7 @@ def main():
     del config.SPECIALENTRY[:]
     todelete=set()#temp set to keep file names that will be deleted in the special folder
     while True:
-        print "[**] Generation %d\n***********"%(genran,)
+        #print "[**] Generation %d\n***********"%(genran,)
         
         del config.TEMPTRACE[:]
         del config.BBSEENVECTOR[:]
@@ -797,12 +818,16 @@ def main():
                 copy_files(config.KEEPD,config.INPUTD,len(os.listdir(config.KEEPD))*1/10)
             #copy_files(config.INITIALD,config.INPUTD,1)
         files=os.listdir(config.INPUTD)
+        per_gen_fnum=0
         for fl in files:
+                per_gen_fnum +=1
                 tfl=os.path.join(config.INPUTD,fl)
                 iln=os.path.getsize(tfl)
                 args = (config.SUT % tfl).split(' ')
                 progname = os.path.basename(args[0])
                 (bbs,retc)=execute(tfl)
+                if per_gen_fnum % 10 ==0:
+                    print "[**] Gen: %d. Executed %d of %d.**"%(genran,per_gen_fnum,config.POPSIZE)
                 if config.BBWEIGHT == True:
                     fitnes[fl]=gau.fitnesCal2(bbs,fl,iln)
                 else:
@@ -833,7 +858,7 @@ def main():
                     
  
                 if retc < 0 and retc != -2:
-                    print "[*]Error code is %d"%(retc,)
+                    #print "[*]Error code is %d"%(retc,)
                     efd.write("%s: %d\n"%(tfl, retc))
                     efd.flush()
                     os.fsync(efd)

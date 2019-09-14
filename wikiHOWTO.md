@@ -9,7 +9,12 @@ Some acronyms:
 - SUT: software undet test (application that you want to fuzz)
 - DTA: dynamic taintflow analysis
 
+0. Vuzzer also employs static analysis to know more about the binary being fuzzed. 
+ A. Starting from version 2.0, VUzzer uses Ghidra to perform static analysis. Install Ghidra from https://ghidra-sre.org/. In the script directory, copy the VUzzer script ghidra_BB_weight.py. Open the binary in Ghidra and run the script. This will create two files with .pkl and .names extension. These files will be used while running VUzzer.
+ B. Open the binary file in IDA and run the vuzzer script file bb-weight-new.py within IDA. This will create two files with .pkl and .names extension. These files will be used while running VUzzer.
 Make sure that you have installed all the components as described in README.md.
+ C. Use angr script to generate .pkl and .names file (See https://github.com/ash09/angr-static-analysis-for-vuzzer64)
+ 
 1. Let us first set some environment variables. Run the following commands:
 ```sh
 $ cd fuzzer-code

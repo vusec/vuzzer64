@@ -161,7 +161,7 @@ class GAoperator:
                 lorig[of]=self.r.choice(self.ALL_CHARS)
             result=''.join([e for e in lorig])
             return result
-        print "[*] 0 offset set"
+        #print "[*] 0 offset set"
         return original
 
     def change_random_full(self, original,fl):

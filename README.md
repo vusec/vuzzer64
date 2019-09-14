@@ -1,4 +1,4 @@
-VUzzer(64)
+VUzzer(64) Version 1.0
 ===========
 
 About
@@ -21,7 +21,7 @@ The requirements for running VUzzer64 are:
    in /usr/include folder.
 *  BitMagic: http://bmagic.sourceforge.net/ - To install it in your system do ```sudo apt-get install bmagic```
 *  BitVector module for python.
-*  IDA disassembler to run static analysis part of VUzzer. Ashley (a MS student from Grenoble) visited VUSec as intern and developed a 'angr' (http://angr.io/) based static analysis module. The code can be found at https://github.com/ash09/angr-static-analysis-for-vuzzer64 (yet to be populated!). However, it should be noted that we have not tested this script much and one can expect some glitches specially on large complex applications! If you have questions on this script, please direct them to Ashley.
+*  Ghidra RE tool -OR- IDA disassembler to run static analysis part of VUzzer -OR- Ashley (a MS student from Grenoble) visited VUSec as intern and developed a 'angr' (http://angr.io/) based static analysis module. The code can be found at https://github.com/ash09/angr-static-analysis-for-vuzzer64 (yet to be populated!). However, it should be noted that we have not tested this script much and one can expect some glitches specially on large complex applications! If you have questions on this script, please direct them to Ashley.
 
 We have tested VUzzer by running it on Ubuntu 18.04 LTS, Linux 4.15.0 image.   
 

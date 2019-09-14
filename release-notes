@@ -1,0 +1,10 @@
+VUzzer version 2.0
+
+Release date: Sept 14, 2019
+
+New in the version 2.0
+1. VUzzer employs static analysis to know more about the binary being fuzzer. Earlier, VUzzer used IDA to perform the static analysis. Starting from this version, VUzzer supports Ghidra RE plateform to perform static analysis.
+
+2. Fixed a bug due to which crashes were not being captured by the VUzzer.
+
+3. We oberved that after VUzzer (and libDFT) is ported to 64-bit plateform, its performance has gone down (i.e. execution time has increased). We will investigate the issue asap.
