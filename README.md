@@ -10,6 +10,8 @@ Originally (in turn), this Project depends heavily on a  modified version of Dat
 #### Running the VUzzer:
 Please see wikiHOWTO.md for a step-by-step procedure to run the VUzzer. This file also contains explanation for most of the options. Also read "datatemp/REDME-dataSet.md" for more information about the datasets and configurations that we used in original VUzzer paper. We have provided seed inputs for several applications in "datatemp" folder.
 
+**NOTE: VUzzer's taintflow analysis does not work on binaries compiled with sanitizers pass (e.g. address sanitizer). Therefore, do not involve VUzzer in an experiment where sanitizer enabled binaries are used.**
+
 
 # Requirements
 -------------
