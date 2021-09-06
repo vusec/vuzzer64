@@ -18,7 +18,7 @@ Please see wikiHOWTO.md for a step-by-step procedure to run the VUzzer. This fil
 The requirements for running VUzzer64 are:
 
 *  A C++11 compiler and unix build utilities (e.g. GNU Make). 
-*  Version 3.7 of Intel Pin. 
+*  Version 3.20 of Intel Pin. 
 *  EWAGBoolArray 0.4.0: https://github.com/lemire/EWAHBoolArray/releases/tag/0.4.0 - To install it in your system just copy headers file(/path/to/EWAHBoolArray-0.4.0/headers)
    in /usr/include folder.
 *  BitMagic: http://bmagic.sourceforge.net/ - To install it in your system do ```sudo apt-get install bmagic```
