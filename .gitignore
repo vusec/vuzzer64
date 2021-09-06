@@ -10,6 +10,7 @@
 fuzzer-code/*.json
 fuzzer-code/*.taint
 pin-*
+pin*
 fuzzer-code/data
 fuzzer-code/outd
 fuzzer-code/inter
