@@ -49,7 +49,3 @@ libdft64/tools/junk.*
 *.swp
 *~
 *.swo
-
-# Temp output #
-###############
-vutemp
