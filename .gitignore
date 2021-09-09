@@ -9,7 +9,6 @@
 *.pyc
 fuzzer-code/*.json
 fuzzer-code/*.taint
-pin-*
 pin*
 fuzzer-code/data
 fuzzer-code/outd
@@ -49,3 +48,7 @@ libdft64/tools/junk.*
 *.swp
 *~
 *.swo
+
+# Temp output #
+###############
+vutemp
