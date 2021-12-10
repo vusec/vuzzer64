@@ -162,9 +162,9 @@ VOID Trace(TRACE trace, VOID *v)
         INS tail = BBL_InsTail(bbl);
         if( INS_IsCall(tail) )
         {
-            if( INS_IsDirectBranchOrCall(tail))
+            if( INS_IsDirectControlFlow(tail))
             {
-                ADDRINT target = INS_DirectBranchOrCallTargetAddress(tail);
+                ADDRINT target = INS_DirectControlFlowTargetAddress(tail);
                 INS_InsertPredicatedCall(tail, IPOINT_BEFORE, AFUNPTR(call_direct), IARG_ADDRINT, target, IARG_END);
             }
             else

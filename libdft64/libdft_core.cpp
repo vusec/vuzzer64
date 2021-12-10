@@ -3614,7 +3614,7 @@ ins_inspect(INS ins)
 						IARG_UINT32, REG_INDX(reg_dst),
 						IARG_MEMORYREAD_EA,
 						IARG_END);
-				else if (INS_MemoryWriteSize(ins) ==
+				else if (INS_MemoryOperandSize(ins, 0) ==
 						BIT2BYTE(MEM_WORD_LEN)){
 					if(REG_is_gr64(reg_dst))
 					INS_InsertCall(ins,
@@ -3782,7 +3782,7 @@ ins_inspect(INS ins)
 						IARG_UINT32, REG_INDX(reg_dst),
 						IARG_MEMORYREAD_EA,
 						IARG_END);
-				else if (INS_MemoryWriteSize(ins) ==
+				else if (INS_MemoryOperandSize(ins, 0) ==
 						BIT2BYTE(MEM_WORD_LEN)){
 					if(REG_is_gr64(reg_dst))
 					INS_InsertCall(ins,
@@ -3829,7 +3829,7 @@ ins_inspect(INS ins)
 		case XED_ICLASS_IDIV:
 		case XED_ICLASS_MUL:
 			if (INS_OperandIsMemory(ins, OP_0))
-				switch (INS_MemoryWriteSize(ins)) {
+				switch (INS_MemoryOperandSize(ins, 0)) {
 					case BIT2BYTE(MEM_64BIT_LEN):
 					INS_InsertCall(ins,
 						IPOINT_BEFORE,
@@ -3916,7 +3916,7 @@ ins_inspect(INS ins)
 		case XED_ICLASS_IMUL:
 			if (INS_OperandIsImplicit(ins, OP_1)) {
 				if (INS_OperandIsMemory(ins, OP_0))
-				switch (INS_MemoryWriteSize(ins)) {
+				switch (INS_MemoryOperandSize(ins, 0)) {
 					case BIT2BYTE(MEM_64BIT_LEN):
 					INS_InsertCall(ins,
 						IPOINT_BEFORE,
@@ -5119,7 +5119,7 @@ ins_inspect(INS ins)
 						IARG_END);
 			}
 			else if (INS_OperandIsMemory(ins, OP_0)) {
-				if (INS_MemoryWriteSize(ins) ==
+				if (INS_MemoryOperandSize(ins, 0) ==
 						BIT2BYTE(MEM_64BIT_LEN))
 					INS_InsertCall(ins,
 						IPOINT_BEFORE,
@@ -5129,7 +5129,7 @@ ins_inspect(INS ins)
 						IARG_MEMORYREAD_EA,
 						IARG_END);
 
-				else if (INS_MemoryWriteSize(ins) ==
+				else if (INS_MemoryOperandSize(ins, 0) ==
 						BIT2BYTE(MEM_LONG_LEN))
 					INS_InsertCall(ins,
 						IPOINT_BEFORE,
@@ -5181,7 +5181,7 @@ ins_inspect(INS ins)
 						IARG_END);
 			}
 			else if (INS_OperandIsMemory(ins, OP_0)) {
-				if (INS_MemoryWriteSize(ins) ==
+				if (INS_MemoryOperandSize(ins, 0) ==
 						BIT2BYTE(MEM_64BIT_LEN))
 					INS_InsertCall(ins,
 						IPOINT_BEFORE,
@@ -5190,7 +5190,7 @@ ins_inspect(INS ins)
 						IARG_MEMORYWRITE_EA,
 						IARG_MEMORYREAD_EA,
 						IARG_END);
-				else if (INS_MemoryWriteSize(ins) ==
+				else if (INS_MemoryOperandSize(ins, 0) ==
 						BIT2BYTE(MEM_LONG_LEN))
 					INS_InsertCall(ins,
 						IPOINT_BEFORE,
@@ -5682,7 +5682,7 @@ ins_inspect(INS ins)
 			}
 			else if(INS_OperandIsReg(ins, OP_0)){
 				reg_dst = INS_OperandReg(ins, OP_0); 
-				if (INS_MemoryReadSize(ins) == BIT2BYTE(MEM_64BIT_LEN))
+				if (INS_MemoryOperandSize(ins, 0) == BIT2BYTE(MEM_64BIT_LEN))
 					INS_InsertCall(ins,
 						IPOINT_BEFORE,
 						(AFUNPTR)m2r_xfer_opq,
@@ -5702,7 +5702,7 @@ ins_inspect(INS ins)
 						IARG_END);
 			}else{
 				reg_src = INS_OperandReg(ins, OP_1); 
-				if (INS_MemoryReadSize(ins) == BIT2BYTE(MEM_64BIT_LEN))
+				if (INS_MemoryOperandSize(ins, 0) == BIT2BYTE(MEM_64BIT_LEN))
 					INS_InsertCall(ins,
 						IPOINT_BEFORE,
 						(AFUNPTR)r2m_xfer_opq,
