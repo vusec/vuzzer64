@@ -381,6 +381,7 @@ def prepareBBOffsets():
         tBB=pickle.load(pFD)
         for tb in tBB:
             ad=tb+int(config.LIBOFFSETS[i],0)
+            #print "###### absolute weight 0x%x"% ad
             # we do not consider weights greater than BBMAXWEIGHT and we take log2 of weights as final weight.
             if tBB[tb][0]>config.BBMAXWEIGHT:
                 config.ALLBB[ad]=int(math.log(config.BBMAXWEIGHT,2))
@@ -466,6 +467,7 @@ def fitnesCal2(bbdict, cinput,ilen):
             bbNum +=1
         else:
             #print"[0x%x] BB missed (%d) !"%(bbadr,bbfr)
+            #print [hex(x) for x in config.ALLBB.keys()]
             score = score+lgfr
             bbNum +=1
     del tempset

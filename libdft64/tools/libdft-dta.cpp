@@ -49,7 +49,7 @@
 KNOB<std::string> KnobImgDesc(KNOB_MODE_WRITEONCE, "pintool", "img_dir", "", "IMG log dir");
 
 static KNOB<std::string> FileKnob(KNOB_MODE_WRITEONCE, "pintool", "filename",
-        "osutils.H", "Filename for which we need to track taint"
+        "taint-input", "Filename for which we need to track taint"
 );
 
 static KNOB<std::string> CmpRawKnob(KNOB_MODE_WRITEONCE, "pintool", "o",
@@ -61,7 +61,7 @@ static KNOB<std::string> LeaRawKnob(KNOB_MODE_WRITEONCE, "pintool", "leao",
 );
 
 static KNOB<std::string> SizeKnob(KNOB_MODE_WRITEONCE, "pintool", "maxoff",
-        "4", "Filename for which we need to track taint"
+        "4", "per byte, how many bytes of taint we want to track. we kept is a 4 bytes (typical int size)"
 );
 
 static KNOB<std::string> MmapKnob(KNOB_MODE_WRITEONCE, "pintool", "mmap",
@@ -69,7 +69,7 @@ static KNOB<std::string> MmapKnob(KNOB_MODE_WRITEONCE, "pintool", "mmap",
 );
 
 static KNOB<UINT32> KnobTimeout(KNOB_MODE_WRITEONCE, "pintool", "x",
-        "30", "specify timeout in seconds"
+        "10", "specify timeout in seconds"
 );
 
 /* threads context */

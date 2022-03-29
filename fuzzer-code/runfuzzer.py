@@ -70,11 +70,13 @@ def check_env():
 
 def run(cmd):
     #print "[*] Just about to run ", cmd
-    proc = subprocess.Popen(" ".join(cmd), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)	
+    #proc = subprocess.Popen(" ".join(cmd), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)	
+    proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=False)	
     stdout, stderr = proc.communicate()
     #print "[*] Run complete..\n"
     #print "## RC %d"%proc.returncode
-    return 128-proc.returncode # Note: the return is subtracted from 128 to make it compatible with the python Popen return code. Earlier, we were not using the SHELL with Popen.
+    #return 128-proc.returncode # Note: the return is subtracted from 128 to make it compatible with the python Popen return code. Earlier, we were not using the SHELL with Popen.
+    return proc.returncode # Note: the return is subtracted from 128 to make it compatible with the python Popen return code. Earlier, we were not using the SHELL with Popen.
 
 def sha1OfFile(filepath):
     with open(filepath, 'rb') as f:
@@ -211,12 +213,18 @@ def isNonPrintable(hexstr):
 
 def execute2(tfl,fl, is_initial=0):
     args=config.SUT % tfl
-    args='\"' + args + '\"' # For cmd shell
-    pargs=config.PINTNTCMD[:]
+    #args='\"' + args + '\"' # For cmd shell
+    #pargs=config.PINTNTCMD[:]
+    config.PINTNTCMD[8]=fl
     if is_initial == 1:
-      runcmd = [pargs[0], args, fl, "0"]
+        #PINTNTCMD[10]=0
+      #runcmd = [pargs[0], args, fl, "0"]
+      
+        runcmd = config.PINTNTCMD+args.split(' ')
     else:
-      runcmd = [pargs[0], args, fl, str(config.TIMEOUT)]
+        config.PINTNTCMD[10]=str(config.TIMEOUT)
+      #runcmd = [pargs[0], args, fl, str(config.TIMEOUT)]
+        runcmd = config.PINTNTCMD+args.split(' ')
     #pargs[pargs.index("inputf")]=fl
     #runcmd=pargs + args.split.split(' ')
     
@@ -650,13 +658,13 @@ def main():
     check_env()
     ## parse the arguments #########
     parser = argparse.ArgumentParser(description='VUzzer options')
-    parser.add_argument('-s','--sut', help='SUT commandline',required=True)
+    parser.add_argument('-s','--sut', help='SUT commandline with %s as placeholder for SUT input',required=True)
     parser.add_argument('-i','--inputd', help='seed input directory (relative path)',required=True)
     parser.add_argument('-w','--weight', help='path of the pickle file(s) for BB wieghts (separated by comma, in case there are two) ',required=True)
     parser.add_argument('-n','--name', help='Path of the pickle file(s) containing strings from CMP inst (separated by comma if there are two).',required=True)
     parser.add_argument('-l','--libnum', help='Nunber of binaries to monitor (only application or used libraries)',required=False, default=1)
-    parser.add_argument('-o','--offsets',help='base-address of application and library (if used), separated by comma', required=False, default='0x00000000')
-    parser.add_argument('-b','--libname',help='library name to monitor',required=False, default='#')
+    parser.add_argument('-o','--offsets',help='base-address of application and library (if used), separated by comma', required=False, default='0x0000000000000000')
+    parser.add_argument('-b','--libname',help='library name to monitor',required=False, default='')
     args = parser.parse_args()
     config.SUT=args.sut
     config.INITIALD=os.path.join(config.INITIALD, args.inputd)
@@ -666,8 +674,10 @@ def main():
     config.NAMESPICKLE=[n for n in args.name.split(',')]
     config.LIBOFFSETS=[o for o in args.offsets.split(',')]
     config.LIBS=args.libname
-    ih=config.BBCMD.index("LIBS=") # this is just to find the index of the placeholder in BBCMD list to replace it with the libname
-    config.BBCMD[ih]="LIBS=%s" % args.libname
+    #ih=config.BBCMD.index("LIBS=") # this is just to find the index of the placeholder in BBCMD list to replace it with the libname
+    ih=config.BBCMD.index("#") # this is just to find the index of the placeholder in BBCMD list to replace it with the libname
+    #config.BBCMD[ih]="LIBS=%s" % args.libname
+    config.BBCMD[ih]=args.libname
 
     ###################################
 
@@ -780,7 +790,7 @@ def main():
     gau.prepareBBOffsets()
     writecache = True
     genran=0
-    bbslide=40 # this is used to call run_error_BB() functions
+    bbslide=100 # this is used to call run_error_BB() functions. currently, i have decided to not call it thus a long wait
     keepslide=3
     keepfilenum=config.BESTP
     config.SEENBB.clear()#initialize set of BB seen so far, which is 0
@@ -810,7 +820,7 @@ def main():
                 copy_files(config.INPUTD,config.KEEPD,keepfilenum)
                 
         #lets find out some of the error handling BBs
-            if  genran >40 and genran%bbslide==0:
+            if  genran >2000 and genran%bbslide==0: # large number 2000 is to prevent not starting intermediate error BB cal. it is expensive and I am working on it. 
                 stat.write("\n**** Error BB cal started ****\n")
                 stat.flush()
                 os.fsync(stat.fileno())

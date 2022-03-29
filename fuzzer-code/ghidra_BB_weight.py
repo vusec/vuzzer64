@@ -271,11 +271,14 @@ def main():
 
         bb_weight.update(getBBScore(function))
         #print "[*] done...."
+       
         for bb in bb_weight:
-            #print "BB: 0x%x - %3.2f"%(bb-image_base, 1.0/bb_weight[bb])
-            #printf("BB: 0x%x - %3.2f\n", (bb-image_base), 1.0/bb_weight[bb])            
-            fweight[bb-image_base]=(1.0/bb_weight[bb], root)
+            #print "BB: 0x%x - %3.2f"%(bb, 1.0/bb_weight[bb])
+            #printf("BB-base: 0x%x - %3.2f\n", (bb-image_base), 1.0/bb_weight[bb])            
+            #fweight[bb-image_base]=(1.0/bb_weight[bb], root)
+            fweight[bb]=(1.0/bb_weight[bb], root)
             # the 'root' is added for the compatibility purpose. it has no value as such.
+        #print "image base: 0x%x"%image_base
     str_final=[str_full, str_bytes]
     path,file_name=os.path.split(currentProgram.getExecutablePath())
     str_file=file_name + '.names'

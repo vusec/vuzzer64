@@ -24,11 +24,18 @@ TIMEOUT=1200#180
 # set path to your pintool bbcounts.so
 PINTOOL=mydir + "/obj-intel64/bbcounts2.so"
 # and for taintflow pintoo
-PINTNT=mydir+"/obj-intel64/dtracker.so"
+PINTNT=os.path.normpath(os.path.join(mydir, "../libdft64/tools/libdft-dta.so"))
+
+# file to capture taint of CMP instruction
+CMPFILE=os.path.join(mydir,'cmp.out')
+
+# file to capture taint of LEA instruction
+LEAFILE=os.path.join(mydir,'lea.out')
 
 LIBS=" "
 # set file path to read executed BBs and their respective frequencies
-BBOUT=mydir + "/outd/bbc.out"
+#BBOUT=mydir + "/outd/bbc.out"
+BBOUT = os.path.join(BASETMP,"bbc.out")
 
 # Set file path for crash hash info (this cannot be changed as pintool writes to this file)
 CRASHFILE='crash.bin'
@@ -87,10 +94,12 @@ IMAGELOAD="imageOffset.txt"
 
 # this is the main command that is passed to run() function in runfuzzer.py
 
-BBCMD=["BBOUT=%s" % BBOUT, "LIBS=", "./run_bb.sh"]
+#BBCMD=["BBOUT=%s" % BBOUT, "LIBS=", "./run_bb.sh"]
+BBCMD=[PINHOME, "-t", PINTOOL,"-o", BBOUT,"-x", "0","-libc","0","-l","#","--"]
 
+PINTNTCMD=[PINHOME,"-t", PINTNT,"-o", CMPFILE, "-leao", LEAFILE, "-filename", "#", "-x", "0", "--"]
 #PINTNTCMD=[PINHOME,"-follow_execv","-t", PINTNT,"-filename", "inputf","-stdout","0","--"]
-PINTNTCMD=["./run_2.sh"]
+#PINTNTCMD=["./run_2.sh"]
 
 # IntelPT related CMD
 SIMPLEPTDIR=mydir + '/../simple-pt/'
@@ -103,16 +112,16 @@ PTCMD=[SIMPLEPTDIR + '/sptcmd', '-K', '-R', '-a', '--']
 minLength=1000
 
 #set generation count that should be skipped before we check for boating
-skipGen=30
+skipGen=100
 
 #set max frequency of BB execution that is considered.
 BBMAXFREQ=10000
 
 #set max weight to be considered for a BB
-BBMAXWEIGHT=65536#2048 
+BBMAXWEIGHT=1000000#65536#2048 
 
 # set the impact of executing error BB on total number of BB. intuitively, it means how many BBs should be nullified by total error BBs. we calculate a negative weight which is based on the total BBs executed by an input and total error BBs detected so far. and the negative weight will be calculated dynamically by using the formula: - len(bbdict)xERRORBBPERCENTAGE/(NumErrorBB) 
-ERRORBBPERCENTAGE=0.5#0.1 #(30%)
+ERRORBBPERCENTAGE=0.3#0.1 #(30%)
 #set this flag if we want to consider BB weights, otherwise each BB have weight 1.
 BBWEIGHT=True
 ERRORBBON=True # this flags decides if we wnat to run error BB detection step.
@@ -144,10 +153,10 @@ ALLSTRINGS=[]# this will be populated by two sets A,B. A= set of full strings fr
 NOFFBYTES=True # this is a flag to ignore \xff\xff\xff\xff (which is -1) immediate.
 ALLBYTES=False#True # due to certain reason, i am ignoring certain bytes, eg. \x00, \xff. if we want to check them, make is True.
 # population size in each generation. Choose even number.
-POPSIZE=500
+POPSIZE=1000
 
 # for elitist approach, set number of best inputs to go in the next generation. Make sure that POPSIZE-BESTP is multiple of 2.
-BESTP=40
+BESTP=50
 
 # number of iterations (generations) to run GA
 GENNUM=1000
@@ -167,8 +176,8 @@ PROBCROSS=0.3
 PROBMUT=0.9#0.8
 
 # set the probability of choosing MOSTCOMMON last value for a offset. Larger the value, more probability of chossing last value (default should be 8)
-MOSTCOMNLAST= 6 #For LAva-M dataset, set this value to <=4
-RANDOMCOMN= True # this is to skip setting most common values for a offset sometimes. For LAVA-M, set this value to True.
+MOSTCOMNLAST= 8 #For LAva-M dataset, it worked well for lower values <=4
+RANDOMCOMN= False # this is to skip setting most common values for a offset sometimes. For LAVA-M, set this value to True.
 
 # stoping condition "if found a crash, stop"
 STOPONCRASH=False 
